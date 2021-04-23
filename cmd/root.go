@@ -59,10 +59,11 @@ func (cli *CommandLine) Execute() {
 	}
 
 	//on validateArgs we make sure it has more than one arg
+	argsCount := len(os.Args)
 	switch os.Args[1] {
 	case "auth":
 		//api_key
-		if len(os.Args) < 3 {
+		if argsCount < 3 {
 			cli.printUsage()
 			return
 		}
@@ -71,7 +72,42 @@ func (cli *CommandLine) Execute() {
 		//need to find a better way to display the data
 		_, _ = authCmd.Run()
 	case "admin-config":
-		//not yet
+		switch argsCount {
+		case 2:
+			err := adminConfig.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		case 3:
+			if os.Args[2] == "update" {
+				err := adminConfig.ActivateSubcommand("update")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			}
+		}
+		adminConfig.Run()
+	case "articles":
+		switch argsCount {
+		case 2:
+			err := adminConfig.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		case 3:
+			if os.Args[2] == "update" {
+				err := adminConfig.ActivateSubcommand("update")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			}
+		}
+		authCmd.Run()
+
 	default:
 		cli.printUsage()
 	}

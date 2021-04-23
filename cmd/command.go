@@ -12,7 +12,12 @@ type Command struct {
 	Description string
 	Data        string
 	Response    *CommandResponse
-	Subcommands []*Command
+	Subcommands map[string]*Subcommand
+}
+
+type Subcommand struct {
+	Description string
+	Active      bool
 }
 
 func Helper(name, description string, tw *tabwriter.Writer) {
@@ -38,4 +43,13 @@ func NewCommandError(description string) CommandValidationError {
 type CommandI interface {
 	Run() (*CommandResponse, CommandValidationError)
 	Helper(*tabwriter.Writer)
+}
+
+//ActivateSubcommand ...
+func (c *Command) ActivateSubcommand(name string) error {
+	if _, ok := c.Subcommands[name]; !ok {
+		return NewCommandError("Subcommand not found")
+	}
+	c.Subcommands[name].Active = true
+	return nil
 }
