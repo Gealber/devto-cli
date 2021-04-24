@@ -102,19 +102,30 @@ func (cli *CommandLine) Execute() {
 			cli.printUsage()
 		}
 	case "articles":
-		switch argsCount {
-		case 2:
+		switch {
+		case argsCount == 2:
 			err := articlesCmd.ActivateSubcommand("retrieve")
 			if err != nil {
 				fmt.Fprintf(os.Stdout, "%v\n", err)
 				cli.printUsage()
 				return
 			}
-		case 3:
+		case argsCount > 2:
 			switch os.Args[2] {
 			case "update":
-				cli.printUsage()
-				return
+				err := articlesCmd.ActivateSubcommand("update")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+				if argsCount == 4 {
+					articleID := os.Args[3]
+					articlesCmd.SetData(articleID)
+				} else {
+					cli.printUsage()
+					return
+				}
 			case "create":
 				err := articlesCmd.ActivateSubcommand("create")
 				if err != nil {
@@ -129,19 +140,31 @@ func (cli *CommandLine) Execute() {
 					cli.printUsage()
 					return
 				}
-				username := os.Args[2]
-				articlesCmd.SetData(username)
-			}
-		case 4:
-			if os.Args[2] == "update" {
-				err := articlesCmd.ActivateSubcommand("update")
-				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
-					cli.printUsage()
-					return
+				username := func() string {
+					if argsCount > 2 && os.Args[2] != "-q" {
+						return os.Args[2]
+					} else {
+						return ""
+					}
+				}()
+				query := func() bool {
+					if os.Args[argsCount-1] == "-q" {
+						return true
+					}
+					return false
+				}()
+				//in case queries are unables
+				if query {
+					err := articlesCmd.ActivateSubcommand("retrieve_query")
+					if err != nil {
+						fmt.Fprintf(os.Stdout, "%v\n", err)
+						cli.printUsage()
+						return
+					}
 				}
-				articleID := os.Args[3]
-				articlesCmd.SetData(articleID)
+				if len(username) > 0 {
+					articlesCmd.SetData(username)
+				}
 			}
 		default:
 			cli.printUsage()

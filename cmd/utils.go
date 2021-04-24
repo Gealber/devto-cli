@@ -80,6 +80,10 @@ func populate(v reflect.Value, value string) error {
 			return nil
 		}
 	case reflect.Bool:
+		if len(value) == 0 {
+			v.SetBool(false)
+			return nil
+		}
 		b, err := strconv.ParseBool(value)
 		if err != nil {
 			return errors.New(fmt.Sprintf("Invalid input type expected bool: %v", err))

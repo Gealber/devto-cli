@@ -70,3 +70,34 @@ func payloadReq(ptr interface{}, method, pathToAdd string) ([]byte, error) {
 	fmt.Fprint(os.Stdout, string(b[:]))
 	return b, nil
 }
+
+func addQueries(req *http.Request, queries *GetArticleQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if len(queries.Page) > 0 {
+			q.Add("page", queries.Page)
+		}
+		if len(queries.PerPage) > 0 {
+			q.Add("per_page", queries.PerPage)
+		}
+		if len(queries.Tag) > 0 {
+			q.Add("tag", queries.Tag)
+		}
+		if len(queries.Tags) > 0 {
+			q.Add("tags", queries.Tags)
+		}
+		if len(queries.State) > 0 {
+			q.Add("state", queries.State)
+		}
+		if len(queries.Top) > 0 {
+			q.Add("top", queries.Top)
+		}
+		if len(queries.CollectionID) > 0 {
+			q.Add("collection_id", queries.CollectionID)
+		}
+		if len(queries.Username) > 0 {
+			q.Add("username", queries.Username)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}

@@ -18,6 +18,10 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrive articles",
 				Active:      false,
 			},
+			"retrieve_query": {
+				Description: "Retrive articles with specific queries",
+				Active:      false,
+			},
 			"create": {
 				Description: "Create article",
 				Active:      false,
@@ -38,7 +42,14 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 		return err
 	}
 	if c.Subcommands["retrieve"].Active {
-		err = c.retrieve()
+		var queries *api.GetArticleQuery
+		if c.Subcommands["retrieve_query"].Active {
+			queries, err = processQueries()
+			if err != nil {
+				return err
+			}
+		}
+		err = c.retrieve(queries)
 		if err != nil {
 			return err
 		}
@@ -81,8 +92,8 @@ func (c *ArticlesCommand) SetData(data string) {
 }
 
 //retrieve ...
-func (c *ArticlesCommand) retrieve() CommandValidationError {
-	_, err := api.RetrieveArticles(c.Data)
+func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidationError {
+	_, err := api.RetrieveArticles(c.Data, queries)
 	if err != nil {
 		return err
 	}
@@ -96,6 +107,18 @@ func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
 		return err
 	}
 	return nil
+}
+
+//processQueries read the data from the User input and put
+//that data inside an GetArticleQuery structure
+func processQueries() (*api.GetArticleQuery, error) {
+	//to store field from GetArticleQuery
+	queries := new(api.GetArticleQuery)
+	err := processInput(queries)
+	if err != nil {
+		return nil, err
+	}
+	return queries, nil
 }
 
 //processUpdate read the data from the User input and put

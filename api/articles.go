@@ -11,7 +11,7 @@ import (
 //RetrieveArticles returns the articles of a given username
 // API PATH: /articles
 // Method: GET
-func RetrieveArticles(username string) (*GetArticlesResponse, error) {
+func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
 	req, err := http.NewRequest("GET", url, nil)
@@ -25,6 +25,7 @@ func RetrieveArticles(username string) (*GetArticlesResponse, error) {
 		q.Add("username", username)
 		req.URL.RawQuery = q.Encode()
 	}
+	addQueries(req, queries)
 
 	response, err := client.Do(req)
 	if err != nil {

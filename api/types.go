@@ -1,7 +1,5 @@
 package api
 
-// RESPONSES FROM THE API
-
 //ArticleResponse ...
 type ArticleResponse struct {
 	TypeOf                 string            `json:"type_of"`
@@ -80,8 +78,6 @@ type ErrorResponse struct {
 	Status int32  `json:"status"`
 }
 
-// REQUEST BODY TO API
-
 //ArticleEdit ...
 type ArticleEdit struct {
 	Article *ArticleEditType `json:"article"`
@@ -115,10 +111,8 @@ type ArticleCreateType struct {
 	CanonicalURL   string   `json:"canonical_url"`
 	Description    string   `json:"description"`
 	Tags           []string `json:"tags"`
-	OrganizationID int32    `json:"organization_id;omitempty"`
+	OrganizationID int32    `json:"organization_id"`
 }
-
-// BASICS TYPES
 
 //User ...
 type UserType struct {
@@ -149,4 +143,18 @@ type FlareTagType struct {
 	Name         string `json:"name"`
 	BgColorHex   string `json:"bg_color_hex"`
 	TextColorHex string `json:"text_color_hex"`
+}
+
+//GetArticleQuery store the queries provided
+//by the user on a Get articles
+type GetArticleQuery struct {
+	Page         string `json:"page"`
+	PerPage      string `json:"per_page"`
+	Tag          string `json:"tag"`
+	Tags         string `json:"tags"`
+	TagsExclude  string `json:"tags_exclude"`
+	Username     string `json:"username"`
+	State        string `json:"state"`
+	Top          string `json:"top"`
+	CollectionID string `json:"collection_id"`
 }
