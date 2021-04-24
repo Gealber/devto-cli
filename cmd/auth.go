@@ -15,23 +15,23 @@ func NewAuthCmd() *AuthCommand {
 }
 
 //Run execute the command
-func (c *AuthCommand) Run() (*CommandResponse, CommandValidationError) {
+func (c *AuthCommand) Run() CommandValidationError {
 	//big assumption for now, that .devto is on the same
 	//folder from where the cli it is executed
 	file, err := os.Create(".devto")
 	if err != nil {
-		return nil, NewCommandError("Unable to create file")
+		return NewCommandError("Unable to create file")
 	}
 	defer file.Close()
 
 	if c.Data == "" {
-		return nil, NewCommandError("API_KEY is empty")
+		return NewCommandError("API_KEY is empty")
 	}
 	_, err = file.Write([]byte(c.Data))
 	if err != nil {
-		return nil, NewCommandError("Unable to store api_key")
+		return NewCommandError("Unable to store api_key")
 	}
-	return nil, nil
+	return nil
 }
 
 //Validate check for the preconditions to execute this command

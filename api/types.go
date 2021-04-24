@@ -5,7 +5,7 @@ package api
 //ArticleResponse ...
 type ArticleResponse struct {
 	TypeOf                 string            `json:"type_of"`
-	ID                     string            `json:"id"`
+	ID                     int32             `json:"id"`
 	Title                  string            `json:"title"`
 	Description            string            `json:"description"`
 	CoverImage             string            `json:"cover_image"`
@@ -35,9 +35,7 @@ type ArticleResponse struct {
 }
 
 //GetArticlesResponse
-type GetArticlesResponse struct {
-	Articles []*ArticleResponse `json:"articles"`
-}
+type GetArticlesResponse []*ArticleResponse
 
 //UpdateArticleResponse ...
 type UpdateArticleResponse struct {
@@ -118,6 +116,6 @@ type OrganizationType struct {
 
 type FlareTagType struct {
 	Name         string `json:"name"`
-	BgColorText  string `json:"bg_color_text"`
+	BgColorHex   string `json:"bg_color_hex"`
 	TextColorHex string `json:"text_color_hex"`
 }

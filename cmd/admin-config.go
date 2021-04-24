@@ -25,18 +25,18 @@ func NewAdminConfigCmd() *AdminConfig {
 }
 
 //Run execute the command
-func (c *AdminConfig) Run() (*CommandResponse, CommandValidationError) {
+func (c *AdminConfig) Run() CommandValidationError {
 	//Diferentiate two cases when is a retrieve and when is an update
 	err := c.Validate()
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if c.Subcommands["retrieve"].Active {
 		c.retrieve()
 	} else if c.Subcommands["udpate"].Active {
 		c.update()
 	}
-	return nil, nil
+	return nil
 }
 
 //Validate execute the command
@@ -50,15 +50,15 @@ func (c *AdminConfig) Helper(tw *tabwriter.Writer) {
 }
 
 //retrieve ...
-func (c *AdminConfig) retrieve() (*CommandResponse, CommandValidationError) {
+func (c *AdminConfig) retrieve() CommandValidationError {
 	api.RetrieveAdminConfig()
-	return nil, nil
+	return nil
 }
 
 //update ...
-func (c *AdminConfig) update() (*CommandResponse, CommandValidationError) {
+func (c *AdminConfig) update() CommandValidationError {
 	api.UpdateAdminConfig()
-	return nil, nil
+	return nil
 }
 
 //SetData ...

@@ -19,6 +19,7 @@ var (
 	Cli         *CommandLine
 	adminConfig *AdminConfig
 	authCmd     *AuthCommand
+	articlesCmd *ArticlesCommand
 )
 
 func init() {
@@ -32,6 +33,8 @@ func init() {
 	Cli.Commands = append(Cli.Commands, adminConfig)
 	authCmd = NewAuthCmd()
 	Cli.Commands = append(Cli.Commands, authCmd)
+	articlesCmd = NewArticlesCmd()
+	Cli.Commands = append(Cli.Commands, articlesCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -70,7 +73,11 @@ func (cli *CommandLine) Execute() {
 		data := os.Args[2]
 		authCmd.SetData(data)
 		//need to find a better way to display the data
-		_, _ = authCmd.Run()
+		err := authCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
 	case "admin-config":
 		switch argsCount {
 		case 2:
@@ -88,26 +95,52 @@ func (cli *CommandLine) Execute() {
 				}
 			}
 		}
-		adminConfig.Run()
+		err := adminConfig.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
 	case "articles":
 		switch argsCount {
 		case 2:
-			err := adminConfig.ActivateSubcommand("retrieve")
+			err := articlesCmd.ActivateSubcommand("retrieve")
 			if err != nil {
+				fmt.Fprintf(os.Stdout, "%v\n", err)
 				cli.printUsage()
 				return
 			}
 		case 3:
 			if os.Args[2] == "update" {
-				err := adminConfig.ActivateSubcommand("update")
+				cli.printUsage()
+				return
+			}
+			err := articlesCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				fmt.Fprintf(os.Stdout, "%v\n", err)
+				cli.printUsage()
+				return
+			}
+			username := os.Args[2]
+			articlesCmd.SetData(username)
+		case 4:
+			if os.Args[2] == "update" {
+				err := articlesCmd.ActivateSubcommand("update")
 				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
 					cli.printUsage()
 					return
 				}
+				articleID := os.Args[3]
+				articlesCmd.SetData(articleID)
 			}
+		default:
+			cli.printUsage()
 		}
-		authCmd.Run()
-
+		err := articlesCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
 	default:
 		cli.printUsage()
 	}

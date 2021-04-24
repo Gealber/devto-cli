@@ -11,7 +11,6 @@ type Command struct {
 	Name        string
 	Description string
 	Data        string
-	Response    *CommandResponse
 	Subcommands map[string]*Subcommand
 }
 
@@ -25,12 +24,6 @@ func Helper(name, description string, tw *tabwriter.Writer) {
 	fmt.Fprintf(tw, format, name, description)
 }
 
-//CommandResponse response by the api to the execution
-type CommandResponse struct {
-	Code        int
-	Description string
-}
-
 //CommandValidationError ...
 type CommandValidationError error
 
@@ -41,7 +34,7 @@ func NewCommandError(description string) CommandValidationError {
 
 //CommandI actions that can be excecuted by a Command
 type CommandI interface {
-	Run() (*CommandResponse, CommandValidationError)
+	Run() CommandValidationError
 	Helper(*tabwriter.Writer)
 }
 

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 var path = "/articles"
@@ -38,8 +39,9 @@ func RetrieveArticles(username string) (*GetArticlesResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Fprint(os.Stdout, string(b[:]))
 
-	data := &GetArticlesResponse{}
+	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)
 	if err != nil {
 		return nil, err
@@ -65,7 +67,7 @@ func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, err
 	//setting value of api-key header
 	req.Header.Set("api-key", GetApiKey())
 	req.Header.Set("Content-Type", "application/json")
-	req.URL.Path += id
+	req.URL.Path += "/" + id
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -77,6 +79,7 @@ func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, err
 	if err != nil {
 		return nil, err
 	}
+	fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := &UpdateArticleResponse{}
 	err = json.Unmarshal(b, data)
