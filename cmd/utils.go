@@ -61,7 +61,6 @@ func processInput(ptr interface{}) error {
 
 func displayFancy(field, t string) {
 	fmt.Printf("  \033[0;36m> %s\033[0m\033[0;32m[%s]\033[0m: ", field, t)
-	fmt.Println()
 }
 
 //populate takes care of setting a single field v
@@ -71,16 +70,15 @@ func populate(v reflect.Value, value string) error {
 	case reflect.String:
 		v.SetString(value)
 	case reflect.Int32:
-		//default value is 0
-		if len(value) == 0 {
-			v.SetInt(0)
+		//only put if a number is provided
+		if len(value) != 0 {
+			i, err := strconv.ParseInt(value, 10, 32)
+			if err != nil {
+				return errors.New(fmt.Sprintf("Invalid input type expected int32: %v", err))
+			}
+			v.SetInt(i)
 			return nil
 		}
-		i, err := strconv.ParseInt(value, 10, 32)
-		if err != nil {
-			return errors.New(fmt.Sprintf("Invalid input type expected int32: %v", err))
-		}
-		v.SetInt(i)
 	case reflect.Bool:
 		b, err := strconv.ParseBool(value)
 		if err != nil {

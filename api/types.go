@@ -37,10 +37,10 @@ type ArticleResponse struct {
 //GetArticlesResponse
 type GetArticlesResponse []*ArticleResponse
 
-//UpdateArticleResponse ...
-type UpdateArticleResponse struct {
+//ModifiedArticle include the response from an Update or Create article
+type ModifiedArticle struct {
 	TypeOf                 string            `json:"type_of"`
-	ID                     string            `json:"id"`
+	ID                     int32             `json:"id"`
 	Title                  string            `json:"title"`
 	Description            string            `json:"description"`
 	CoverImage             string            `json:"cover_image"`
@@ -69,6 +69,12 @@ type UpdateArticleResponse struct {
 	FlareTag               *FlareTagType     `json:"flare_tag"`
 }
 
+//UpdateArticleResponse ...
+type UpdateArticleResponse ModifiedArticle
+
+//ArticleCreatedResponse ...
+type ArticleCreatedResponse ModifiedArticle
+
 type ErrorResponse struct {
 	Error  string `json:"error"`
 	Status int32  `json:"status"`
@@ -78,6 +84,11 @@ type ErrorResponse struct {
 
 //ArticleEdit ...
 type ArticleEdit struct {
+	Article *ArticleEditType `json:"article"`
+}
+
+//ArticleEditType ...
+type ArticleEditType struct {
 	Title          string `json:"title"`
 	BodyMarkdown   string `json:"body_markdown"`
 	Published      bool   `json:"published"`
@@ -88,6 +99,26 @@ type ArticleEdit struct {
 	Tags           string `json:"tags"`
 	OrganizationID int32  `json:"organization_id"`
 }
+
+//ArticleCreate ...
+type ArticleCreate struct {
+	Article *ArticleCreateType `json:"article"`
+}
+
+//ArticleCreateType ...
+type ArticleCreateType struct {
+	Title          string   `json:"title"`
+	BodyMarkdown   string   `json:"body_markdown"`
+	Published      bool     `json:"published"`
+	Series         string   `json:"series"`
+	MainImage      string   `json:"main_image"`
+	CanonicalURL   string   `json:"canonical_url"`
+	Description    string   `json:"description"`
+	Tags           []string `json:"tags"`
+	OrganizationID int32    `json:"organization_id;omitempty"`
+}
+
+// BASICS TYPES
 
 //User ...
 type UserType struct {

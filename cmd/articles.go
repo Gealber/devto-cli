@@ -52,7 +52,11 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 			return err
 		}
 	} else if c.Subcommands["create"].Active {
-		err = c.create()
+		article, err := processCreate()
+		if err != nil {
+			return err
+		}
+		err = c.create(article)
 		if err != nil {
 			return err
 		}
@@ -98,16 +102,36 @@ func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
 //that data inside an ArticleEdit structure
 func processUpdate() (*api.ArticleEdit, error) {
 	//to store field from ArticleEdit
-	article := new(api.ArticleEdit)
+	article := new(api.ArticleEditType)
 	err := processInput(article)
 	if err != nil {
 		return nil, err
 	}
-	return article, nil
+	return &api.ArticleEdit{
+		Article: article,
+	}, nil
+}
+
+//processCreate read the data from the User input and put
+//that data inside an ArticleCreate structure
+func processCreate() (*api.ArticleCreate, error) {
+	//to store field from ArticleEdit
+	article := new(api.ArticleCreateType)
+	err := processInput(article)
+	if err != nil {
+		return nil, err
+	}
+	return &api.ArticleCreate{
+		Article: article,
+	}, nil
 }
 
 //create ...
-func (c *ArticlesCommand) create() CommandValidationError {
+func (c *ArticlesCommand) create(data *api.ArticleCreate) CommandValidationError {
+	_, err := api.CreateArticle(data)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

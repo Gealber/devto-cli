@@ -1,7 +1,6 @@
 package api
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -9,14 +8,12 @@ import (
 	"os"
 )
 
-var path = "/articles"
-
 //RetrieveArticles returns the articles of a given username
 // API PATH: /articles
 // Method: GET
 func RetrieveArticles(username string) (*GetArticlesResponse, error) {
 	client := &http.Client{}
-	url := fmt.Sprintf("%s%s", baseURL, path)
+	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -25,7 +22,7 @@ func RetrieveArticles(username string) (*GetArticlesResponse, error) {
 	//setting value of api-key header
 	if len(username) > 0 {
 		q := req.URL.Query()
-		q.Add("user", username)
+		q.Add("username", username)
 		req.URL.RawQuery = q.Encode()
 	}
 
@@ -53,38 +50,36 @@ func RetrieveArticles(username string) (*GetArticlesResponse, error) {
 // API PATH: /articles/{id}
 // Method: PUT
 func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, error) {
-	client := &http.Client{}
-	url := fmt.Sprintf("%s%s", baseURL, path)
-
-	//preparing payload
-	payloadBuf := new(bytes.Buffer)
-	json.NewEncoder(payloadBuf).Encode(article)
-	req, err := http.NewRequest("PUT", url, payloadBuf)
+	b, err := payloadReq(article, "PUT", "/"+id)
 	if err != nil {
 		return nil, err
 	}
-
-	//setting value of api-key header
-	req.Header.Set("api-key", GetApiKey())
-	req.Header.Set("Content-Type", "application/json")
-	req.URL.Path += "/" + id
-
-	response, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer response.Body.Close()
-
-	b, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := &UpdateArticleResponse{}
-	err = json.Unmarshal(b, data)
+	if len(b) > 0 {
+		err = json.Unmarshal(b, data)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return data, nil
+}
+
+//CreateArticle create a new article
+// API PATH: /articles
+// Method: POST
+func CreateArticle(article *ArticleCreate) (*ArticleCreatedResponse, error) {
+	b, err := payloadReq(article, "POST", "")
 	if err != nil {
 		return nil, err
+	}
+
+	data := &ArticleCreatedResponse{}
+	if len(b) > 0 {
+		err = json.Unmarshal(b, data)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return data, nil
 }

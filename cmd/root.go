@@ -61,6 +61,7 @@ func (cli *CommandLine) Execute() {
 		return
 	}
 
+	//devto articles create
 	//on validateArgs we make sure it has more than one arg
 	argsCount := len(os.Args)
 	switch os.Args[1] {
@@ -110,18 +111,27 @@ func (cli *CommandLine) Execute() {
 				return
 			}
 		case 3:
-			if os.Args[2] == "update" {
+			switch os.Args[2] {
+			case "update":
 				cli.printUsage()
 				return
+			case "create":
+				err := articlesCmd.ActivateSubcommand("create")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			default:
+				err := articlesCmd.ActivateSubcommand("retrieve")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+				username := os.Args[2]
+				articlesCmd.SetData(username)
 			}
-			err := articlesCmd.ActivateSubcommand("retrieve")
-			if err != nil {
-				fmt.Fprintf(os.Stdout, "%v\n", err)
-				cli.printUsage()
-				return
-			}
-			username := os.Args[2]
-			articlesCmd.SetData(username)
 		case 4:
 			if os.Args[2] == "update" {
 				err := articlesCmd.ActivateSubcommand("update")
