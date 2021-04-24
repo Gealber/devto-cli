@@ -158,3 +158,10 @@ type GetArticleQuery struct {
 	Top          string `json:"top"`
 	CollectionID string `json:"collection_id"`
 }
+
+//GetLatestArticleQuery store the queries provided
+//by the user on a Get latest articles
+type GetLatestArticleQuery struct {
+	Page    string `json:"page"`
+	PerPage string `json:"per_page"`
+}

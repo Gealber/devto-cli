@@ -84,3 +84,36 @@ func CreateArticle(article *ArticleCreate) (*ArticleCreatedResponse, error) {
 	}
 	return data, nil
 }
+
+//RetrieveLatestArticles returns latest articles
+// API PATH: /articles/latest
+// Method: GET
+func RetrieveLatestArticles(queries *GetLatestArticleQuery) (*GetArticlesResponse, error) {
+	client := &http.Client{}
+	url := fmt.Sprintf("%s%s", baseURL, pathArticle+"/"+"latest")
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	addLatesQueries(req, queries)
+
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Fprint(os.Stdout, string(b[:]))
+
+	data := new(GetArticlesResponse)
+	err = json.Unmarshal(b, data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

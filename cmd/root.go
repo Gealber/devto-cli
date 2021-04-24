@@ -133,6 +133,28 @@ func (cli *CommandLine) Execute() {
 					cli.printUsage()
 					return
 				}
+			case "latest":
+				err := articlesCmd.ActivateSubcommand("retrieve_latest")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+				query := func() bool {
+					if os.Args[argsCount-1] == "-q" {
+						return true
+					}
+					return false
+				}()
+				//in case queries are unables
+				if query {
+					err := articlesCmd.ActivateSubcommand("latest_query")
+					if err != nil {
+						fmt.Fprintf(os.Stdout, "%v\n", err)
+						cli.printUsage()
+						return
+					}
+				}
 			default:
 				err := articlesCmd.ActivateSubcommand("retrieve")
 				if err != nil {

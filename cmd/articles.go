@@ -18,6 +18,14 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrive articles",
 				Active:      false,
 			},
+			"retrieve_latest": {
+				Description: "Retrieve latest articles",
+				Active:      false,
+			},
+			"latest_query": {
+				Description: "Unable queries on retrieve latest articles",
+				Active:      false,
+			},
 			"retrieve_query": {
 				Description: "Retrive articles with specific queries",
 				Active:      false,
@@ -50,6 +58,18 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 			}
 		}
 		err = c.retrieve(queries)
+		if err != nil {
+			return err
+		}
+	} else if c.Subcommands["retrieve_latest"].Active {
+		var queries *api.GetLatestArticleQuery
+		if c.Subcommands["latest_query"].Active {
+			queries, err = processLatestQueries()
+			if err != nil {
+				return err
+			}
+		}
+		err = c.retrieveLatest(queries)
 		if err != nil {
 			return err
 		}
@@ -100,6 +120,15 @@ func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidati
 	return nil
 }
 
+//retrieveLatest ...
+func (c *ArticlesCommand) retrieveLatest(queries *api.GetLatestArticleQuery) CommandValidationError {
+	_, err := api.RetrieveLatestArticles(queries)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 //update ...
 func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
 	_, err := api.UpdateArticle(c.Data, data)
@@ -107,6 +136,18 @@ func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
 		return err
 	}
 	return nil
+}
+
+//processLatestQueries read the data from the User input and put
+//that data inside an GetArticleQuery structure
+func processLatestQueries() (*api.GetLatestArticleQuery, error) {
+	//to store field from GetLatestArticleQuery
+	queries := new(api.GetLatestArticleQuery)
+	err := processInput(queries)
+	if err != nil {
+		return nil, err
+	}
+	return queries, nil
 }
 
 //processQueries read the data from the User input and put

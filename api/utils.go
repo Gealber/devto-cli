@@ -101,3 +101,16 @@ func addQueries(req *http.Request, queries *GetArticleQuery) {
 		req.URL.RawQuery = q.Encode()
 	}
 }
+
+func addLatesQueries(req *http.Request, queries *GetLatestArticleQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if len(queries.Page) > 0 {
+			q.Add("page", queries.Page)
+		}
+		if len(queries.PerPage) > 0 {
+			q.Add("per_page", queries.PerPage)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
