@@ -114,9 +114,6 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
     * `./devto reading_lists`
 
 # TODO
-* Organizations
-* Podcast Episodes
-* Reading List
 * Users
 * Videos
 * Webhooks
