@@ -151,3 +151,34 @@ func RetrieveArticleByID(id string) (*ModifiedArticle, error) {
 	}
 	return data, nil
 }
+
+//RetrieveArticlesVideo returns the articles with videos
+// API PATH: /videos
+// Method: GET
+func RetrieveArticlesVideo(id string) (*ArticlesVideoResponse, error) {
+	client := &http.Client{}
+	url := fmt.Sprintf("%s%s", baseURL, "/videos")
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Fprint(os.Stdout, string(b[:]))
+
+	data := new(ArticlesVideoResponse)
+	err = json.Unmarshal(b, data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

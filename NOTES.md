@@ -1,4 +1,6 @@
 # Let's put the notes here instead of the README.md
 
-Find a way to diferentiate between a required and an option field.
-Maybe with a required or option value of a tag 
+1. In  some cases the returned data could be cleaned up.
+2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
+less on Linux.
+3. Next step implement the case of articles with video.

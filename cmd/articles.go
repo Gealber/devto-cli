@@ -22,6 +22,10 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrieve latest articles",
 				Active:      false,
 			},
+			"retrieve_videos": {
+				Description: "Retrive articles with videos",
+				Active:      false,
+			},
 			"retrieve_id": {
 				Description: "Retrieve article by ID",
 				Active:      false,
@@ -100,6 +104,11 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 		if err != nil {
 			return err
 		}
+	} else if c.Subcommands["retrieve_videos"].Active {
+		err = c.retrieveArticlesVideo()
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -132,6 +141,15 @@ func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidati
 //retrieveByID ...
 func (c *ArticlesCommand) retrieveByID() CommandValidationError {
 	_, err := api.RetrieveArticleByID(c.Data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//retrieveArticlesVideo ...
+func (c *ArticlesCommand) retrieveArticlesVideo() CommandValidationError {
+	_, err := api.RetrieveArticlesVideo(c.Data)
 	if err != nil {
 		return err
 	}

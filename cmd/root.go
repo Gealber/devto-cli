@@ -155,6 +155,13 @@ func (cli *CommandLine) Execute() {
 						return
 					}
 				}
+			case "videos":
+				err := articlesCmd.ActivateSubcommand("retrieve_videos")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
 			default:
 				err := articlesCmd.ActivateSubcommand("retrieve")
 				if err != nil {

@@ -165,3 +165,18 @@ type GetLatestArticleQuery struct {
 	Page    string `json:"page"`
 	PerPage string `json:"per_page"`
 }
+
+//ArticleVideoResponse ...
+type ArticleVideoResponse struct {
+	TypeOf                 string    `json:"type_of"`
+	ID                     int32     `json:"id"`
+	Path                   string    `json:"path"`
+	CloudinaryVideoURL     string    `json:"cloudinary_video_url"`
+	Title                  string    `json:"title"`
+	VideoDurationInMinutes string    `json:"video_duration_in_minutes"`
+	VideoSourceURL         string    `json:"video_source_url"`
+	User                   *UserType `json:"user"`
+}
+
+//ArticlesVideoResponse ...
+type ArticlesVideoResponse []*ArticleVideoResponse
