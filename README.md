@@ -22,6 +22,12 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 ## Followers
 * Retrieve my followers. An api_key is required, so make sure you provide one with `auth` command.
 
+## Listings
+* Retrieve listing availables.
+* Create a listing.
+* Update a listing.
+* Reading a given listing by its id.
+
 # Build
 
 `go build -o devto`
@@ -67,8 +73,17 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Retrieve my followers. An api_key is required, so make sure you provide one with `auth` command.
     * `./devto followers`
 
+## Listings
+* Retrieve listing availables.
+    * `./devto listings`
+* Create a listing.
+    * `./devto listings create`
+* Update a listing.
+    * `./devto listings update <id>`
+* Reading a given listing by its id.
+    * `./devto listings retrieve <id>`
+
 # TODO
-* Listings
 * Organizations
 * Podcast Episodes
 * Reading List
