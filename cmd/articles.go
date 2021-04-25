@@ -15,7 +15,7 @@ func NewArticlesCmd() *ArticlesCommand {
 		Description: "Retrieve, Create and Update the articles",
 		Subcommands: map[string]*Subcommand{
 			"retrieve": {
-				Description: "Retrive articles",
+				Description: "Retrieve articles",
 				Active:      false,
 			},
 			"retrieve_latest": {
@@ -23,7 +23,7 @@ func NewArticlesCmd() *ArticlesCommand {
 				Active:      false,
 			},
 			"retrieve_videos": {
-				Description: "Retrive articles with videos",
+				Description: "Retrieve articles with videos",
 				Active:      false,
 			},
 			"retrieve_id": {
@@ -35,7 +35,7 @@ func NewArticlesCmd() *ArticlesCommand {
 				Active:      false,
 			},
 			"retrieve_query": {
-				Description: "Retrive articles with specific queries",
+				Description: "Retrieve articles with specific queries",
 				Active:      false,
 			},
 			"create": {

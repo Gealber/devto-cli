@@ -114,3 +114,16 @@ func addLatesQueries(req *http.Request, queries *GetLatestArticleQuery) {
 		req.URL.RawQuery = q.Encode()
 	}
 }
+
+func addCommentQuery(req *http.Request, queries *CommentQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if len(queries.AID) > 0 {
+			q.Add("a_id", queries.AID)
+		}
+		if len(queries.PID) > 0 {
+			q.Add("p_id", queries.PID)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}

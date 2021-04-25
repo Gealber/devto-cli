@@ -180,3 +180,22 @@ type ArticleVideoResponse struct {
 
 //ArticlesVideoResponse ...
 type ArticlesVideoResponse []*ArticleVideoResponse
+
+//CommentResponse ...
+type CommentType struct {
+	TypeOf    string         `json:"type_of"`
+	IDCode    string         `json:"id_code"`
+	CreatedAt string         `json:"created_at"`
+	BodyHtml  string         `json:"body_html"`
+	User      *UserType      `json:"user"`
+	Children  []*CommentType `json:"children"`
+}
+
+//CommentsResponse ...
+type CommentsResponse []*CommentType
+
+//CommentQuery ...
+type CommentQuery struct {
+	AID string `json:"a_id"`
+	PID string `json:"p_id"`
+}

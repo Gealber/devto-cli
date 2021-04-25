@@ -21,6 +21,7 @@ var (
 	adminConfig *AdminConfig
 	authCmd     *AuthCommand
 	articlesCmd *ArticlesCommand
+	commentsCmd *CommentsCommand
 )
 
 func init() {
@@ -36,6 +37,8 @@ func init() {
 	Cli.Commands = append(Cli.Commands, authCmd)
 	articlesCmd = NewArticlesCmd()
 	Cli.Commands = append(Cli.Commands, articlesCmd)
+	commentsCmd = NewCommentsCommand()
+	Cli.Commands = append(Cli.Commands, commentsCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -221,6 +224,41 @@ func (cli *CommandLine) Execute() {
 			cli.printUsage()
 		}
 		err := articlesCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "comments":
+		switch argsCount {
+		case 4:
+			commentsCmd.SetData(os.Args[3])
+			if os.Args[2] == "-a_id" {
+				err := commentsCmd.ActivateSubcommand("retrieve_aid")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			} else if os.Args[2] == "-p_id" {
+				err := commentsCmd.ActivateSubcommand("retrieve_pid")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			} else if os.Args[2] == "-id" {
+				err := commentsCmd.ActivateSubcommand("retrieve_id")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			} else {
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := commentsCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()
