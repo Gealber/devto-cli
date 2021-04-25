@@ -21,5 +21,7 @@ First make sure you have golang installed
 * `./devto auth <api_key>`
 * `./devto articles`
 * `./devto articles gealber`
+* `./devto articles <id>`
+* `./devto articles videos`
 * `./devto articles create`
 * `./devto articles update <id>`
