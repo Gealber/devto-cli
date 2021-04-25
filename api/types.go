@@ -148,22 +148,22 @@ type FlareTagType struct {
 //GetArticleQuery store the queries provided
 //by the user on a Get articles
 type GetArticleQuery struct {
-	Page         string `json:"page"`
-	PerPage      string `json:"per_page"`
+	Page         int32  `json:"page"`
+	PerPage      int32  `json:"per_page"`
 	Tag          string `json:"tag"`
 	Tags         string `json:"tags"`
 	TagsExclude  string `json:"tags_exclude"`
 	Username     string `json:"username"`
 	State        string `json:"state"`
-	Top          string `json:"top"`
-	CollectionID string `json:"collection_id"`
+	Top          int32  `json:"top"`
+	CollectionID int32  `json:"collection_id"`
 }
 
 //GetLatestArticleQuery store the queries provided
 //by the user on a Get latest articles
 type GetLatestArticleQuery struct {
-	Page    string `json:"page"`
-	PerPage string `json:"per_page"`
+	Page    int32 `json:"page"`
+	PerPage int32 `json:"per_page"`
 }
 
 //ArticleVideoResponse ...
@@ -196,8 +196,8 @@ type CommentsResponse []*CommentType
 
 //CommentQuery ...
 type CommentQuery struct {
-	AID string `json:"a_id"`
-	PID string `json:"p_id"`
+	AID int32 `json:"a_id"`
+	PID int32 `json:"p_id"`
 }
 
 //FollowTagsResponse ...
@@ -223,8 +223,8 @@ type TagType struct {
 
 //TagsQuery ...
 type TagsQuery struct {
-	Page    string `json:"page"`
-	PerPage string `json:"per_page"`
+	Page    int32 `json:"page"`
+	PerPage int32 `json:"per_page"`
 }
 
 //FollowerType ...
@@ -244,7 +244,7 @@ type FollowersResponse []*FollowerType
 
 //FollowersQuery ...
 type FollowersQuery struct {
-	Page    string `json:"page"`
-	PerPage string `json:"per_page"`
+	Page    int32  `json:"page"`
+	PerPage int32  `json:"per_page"`
 	Sort    string `json:"sort"`
 }

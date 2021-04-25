@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strconv"
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
@@ -74,10 +75,14 @@ func (c *CommentsCommand) SetData(data string) {
 
 //retrieveByAID ...
 func (c *CommentsCommand) retrieveByAID() CommandValidationError {
-	queries := &api.CommentQuery{
-		AID: c.Data,
+	aid, err := strconv.ParseInt(c.Data, 10, 32)
+	if err != nil {
+		return err
 	}
-	_, err := api.RetrieveComments(queries)
+	queries := &api.CommentQuery{
+		AID: int32(aid),
+	}
+	_, err = api.RetrieveComments(queries)
 	if err != nil {
 		return err
 	}
@@ -86,10 +91,14 @@ func (c *CommentsCommand) retrieveByAID() CommandValidationError {
 
 //retrieveByPID ...
 func (c *CommentsCommand) retrieveByPID() CommandValidationError {
-	queries := &api.CommentQuery{
-		PID: c.Data,
+	pid, err := strconv.ParseInt(c.Data, 10, 32)
+	if err != nil {
+		return err
 	}
-	_, err := api.RetrieveComments(queries)
+	queries := &api.CommentQuery{
+		PID: int32(pid),
+	}
+	_, err = api.RetrieveComments(queries)
 	if err != nil {
 		return err
 	}

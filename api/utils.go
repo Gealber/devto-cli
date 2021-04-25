@@ -74,11 +74,11 @@ func payloadReq(ptr interface{}, method, pathToAdd string) ([]byte, error) {
 func addQueries(req *http.Request, queries *GetArticleQuery) {
 	if queries != nil {
 		q := req.URL.Query()
-		if len(queries.Page) > 0 {
-			q.Add("page", queries.Page)
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
 		}
-		if len(queries.PerPage) > 0 {
-			q.Add("per_page", queries.PerPage)
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		if len(queries.Tag) > 0 {
 			q.Add("tag", queries.Tag)
@@ -89,11 +89,11 @@ func addQueries(req *http.Request, queries *GetArticleQuery) {
 		if len(queries.State) > 0 {
 			q.Add("state", queries.State)
 		}
-		if len(queries.Top) > 0 {
-			q.Add("top", queries.Top)
+		if queries.Top > 0 {
+			q.Add("top", fmt.Sprintf("%d", queries.Top))
 		}
-		if len(queries.CollectionID) > 0 {
-			q.Add("collection_id", queries.CollectionID)
+		if queries.CollectionID > 0 {
+			q.Add("collection_id", fmt.Sprintf("%d", queries.CollectionID))
 		}
 		if len(queries.Username) > 0 {
 			q.Add("username", queries.Username)
@@ -105,11 +105,11 @@ func addQueries(req *http.Request, queries *GetArticleQuery) {
 func addLatesQueries(req *http.Request, queries *GetLatestArticleQuery) {
 	if queries != nil {
 		q := req.URL.Query()
-		if len(queries.Page) > 0 {
-			q.Add("page", queries.Page)
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
 		}
-		if len(queries.PerPage) > 0 {
-			q.Add("per_page", queries.PerPage)
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		req.URL.RawQuery = q.Encode()
 	}
@@ -118,11 +118,11 @@ func addLatesQueries(req *http.Request, queries *GetLatestArticleQuery) {
 func addCommentQuery(req *http.Request, queries *CommentQuery) {
 	if queries != nil {
 		q := req.URL.Query()
-		if len(queries.AID) > 0 {
-			q.Add("a_id", queries.AID)
+		if queries.AID > 0 {
+			q.Add("a_id", fmt.Sprintf("%d", queries.AID))
 		}
-		if len(queries.PID) > 0 {
-			q.Add("p_id", queries.PID)
+		if queries.PID > 0 {
+			q.Add("p_id", fmt.Sprintf("%d", queries.PID))
 		}
 		req.URL.RawQuery = q.Encode()
 	}
@@ -131,11 +131,11 @@ func addCommentQuery(req *http.Request, queries *CommentQuery) {
 func addFollowerQuery(req *http.Request, queries *FollowersQuery) {
 	if queries != nil {
 		q := req.URL.Query()
-		if len(queries.Page) > 0 {
-			q.Add("page", queries.Page)
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
 		}
-		if len(queries.PerPage) > 0 {
-			q.Add("per_page", queries.PerPage)
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		if len(queries.Sort) > 0 {
 			q.Add("sort", queries.Sort)
@@ -147,11 +147,11 @@ func addFollowerQuery(req *http.Request, queries *FollowersQuery) {
 func addTagsQuery(req *http.Request, queries *TagsQuery) {
 	if queries != nil {
 		q := req.URL.Query()
-		if len(queries.Page) > 0 {
-			q.Add("page", queries.Page)
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
 		}
-		if len(queries.PerPage) > 0 {
-			q.Add("per_page", queries.PerPage)
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		req.URL.RawQuery = q.Encode()
 	}
