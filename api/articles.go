@@ -117,3 +117,37 @@ func RetrieveLatestArticles(queries *GetLatestArticleQuery) (*GetArticlesRespons
 	}
 	return data, nil
 }
+
+//RetrieveArticleByID returns the article
+// API PATH: /articles/{id}
+// Method: GET
+func RetrieveArticleByID(id string) (*ModifiedArticle, error) {
+	client := &http.Client{}
+	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	//setting value of api-key header
+	req.URL.Path += "/" + id
+
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Fprint(os.Stdout, string(b[:]))
+
+	data := new(ModifiedArticle)
+	err = json.Unmarshal(b, data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"text/tabwriter"
 )
 
@@ -61,7 +62,6 @@ func (cli *CommandLine) Execute() {
 		return
 	}
 
-	//devto articles create
 	//on validateArgs we make sure it has more than one arg
 	argsCount := len(os.Args)
 	switch os.Args[1] {
@@ -164,7 +164,10 @@ func (cli *CommandLine) Execute() {
 				}
 				username := func() string {
 					if argsCount > 2 && os.Args[2] != "-q" {
-						return os.Args[2]
+						if _, err := strconv.ParseInt(os.Args[2], 10, 32); err != nil {
+							return os.Args[2]
+						}
+						return ""
 					} else {
 						return ""
 					}
@@ -174,6 +177,16 @@ func (cli *CommandLine) Execute() {
 						return true
 					}
 					return false
+				}()
+				id := func() string {
+					if argsCount > 2 && os.Args[2] != "-q" {
+						if _, err := strconv.ParseInt(os.Args[2], 10, 32); err != nil {
+							return ""
+						}
+						return os.Args[2]
+					} else {
+						return ""
+					}
 				}()
 				//in case queries are unables
 				if query {
@@ -186,6 +199,15 @@ func (cli *CommandLine) Execute() {
 				}
 				if len(username) > 0 {
 					articlesCmd.SetData(username)
+				}
+				if len(id) > 0 {
+					articlesCmd.SetData(id)
+					err := articlesCmd.ActivateSubcommand("retrieve_id")
+					if err != nil {
+						fmt.Fprintf(os.Stdout, "%v\n", err)
+						cli.printUsage()
+						return
+					}
 				}
 			}
 		default:

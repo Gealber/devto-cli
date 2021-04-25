@@ -22,6 +22,10 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrieve latest articles",
 				Active:      false,
 			},
+			"retrieve_id": {
+				Description: "Retrieve article by ID",
+				Active:      false,
+			},
 			"latest_query": {
 				Description: "Unable queries on retrieve latest articles",
 				Active:      false,
@@ -53,6 +57,11 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 		var queries *api.GetArticleQuery
 		if c.Subcommands["retrieve_query"].Active {
 			queries, err = processQueries()
+			if err != nil {
+				return err
+			}
+		} else if c.Subcommands["retrieve_id"].Active {
+			err := c.retrieveByID()
 			if err != nil {
 				return err
 			}
@@ -114,6 +123,15 @@ func (c *ArticlesCommand) SetData(data string) {
 //retrieve ...
 func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidationError {
 	_, err := api.RetrieveArticles(c.Data, queries)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//retrieveByID ...
+func (c *ArticlesCommand) retrieveByID() CommandValidationError {
+	_, err := api.RetrieveArticleByID(c.Data)
 	if err != nil {
 		return err
 	}
