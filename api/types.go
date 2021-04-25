@@ -199,3 +199,52 @@ type CommentQuery struct {
 	AID string `json:"a_id"`
 	PID string `json:"p_id"`
 }
+
+//FollowTagsResponse ...
+type FollowTagsResponse []*FollowsTagType
+
+//FollowTagType ...
+type FollowsTagType struct {
+	ID     int64   `json:"id"`
+	Name   string  `json:"name"`
+	Points float64 `json:"points"`
+}
+
+//TagsResponse ...
+type TagsResponse []*TagType
+
+//TagType ...
+type TagType struct {
+	ID           int64  `json:"id"`
+	Name         string `json:"name"`
+	BgColorHex   string `json:"bg_color_hex"`
+	TextColorHex string `json:"text_color_hex"`
+}
+
+//TagsQuery ...
+type TagsQuery struct {
+	Page    string `json:"page"`
+	PerPage string `json:"per_page"`
+}
+
+//FollowerType ...
+type FollowerType struct {
+	TypeOf    string `json:"type_of"`
+	CreatedAt string `json:"created_at"`
+	ID        int32  `json:"id"`
+	Name      string `json:"name"`
+	Path      string `json:"path"`
+	Username  string `json:"username"`
+	//image 60x60
+	ProfileImage string `json:"profile_image"`
+}
+
+//FollowersResponse ...
+type FollowersResponse []*FollowerType
+
+//FollowersQuery ...
+type FollowersQuery struct {
+	Page    string `json:"page"`
+	PerPage string `json:"per_page"`
+	Sort    string `json:"sort"`
+}

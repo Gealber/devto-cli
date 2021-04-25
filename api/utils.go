@@ -127,3 +127,32 @@ func addCommentQuery(req *http.Request, queries *CommentQuery) {
 		req.URL.RawQuery = q.Encode()
 	}
 }
+
+func addFollowerQuery(req *http.Request, queries *FollowersQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if len(queries.Page) > 0 {
+			q.Add("page", queries.Page)
+		}
+		if len(queries.PerPage) > 0 {
+			q.Add("per_page", queries.PerPage)
+		}
+		if len(queries.Sort) > 0 {
+			q.Add("sort", queries.Sort)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
+
+func addTagsQuery(req *http.Request, queries *TagsQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if len(queries.Page) > 0 {
+			q.Add("page", queries.Page)
+		}
+		if len(queries.PerPage) > 0 {
+			q.Add("per_page", queries.PerPage)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}

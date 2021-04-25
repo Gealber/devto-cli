@@ -17,11 +17,13 @@ func NewCli() *CommandLine {
 }
 
 var (
-	Cli         *CommandLine
-	adminConfig *AdminConfig
-	authCmd     *AuthCommand
-	articlesCmd *ArticlesCommand
-	commentsCmd *CommentsCommand
+	Cli          *CommandLine
+	adminConfig  *AdminConfig
+	authCmd      *AuthCommand
+	articlesCmd  *ArticlesCommand
+	commentsCmd  *CommentsCommand
+	tagsCmd      *TagsCommand
+	followersCmd *FollowersCommand
 )
 
 func init() {
@@ -39,6 +41,10 @@ func init() {
 	Cli.Commands = append(Cli.Commands, articlesCmd)
 	commentsCmd = NewCommentsCommand()
 	Cli.Commands = append(Cli.Commands, commentsCmd)
+	tagsCmd = NewTagsCommand()
+	Cli.Commands = append(Cli.Commands, tagsCmd)
+	followersCmd = NewFollowersCommand()
+	Cli.Commands = append(Cli.Commands, followersCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -259,6 +265,51 @@ func (cli *CommandLine) Execute() {
 			return
 		}
 		err := commentsCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "tags":
+		switch argsCount {
+		case 2:
+			err := tagsCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		case 3:
+			if os.Args[2] == "follows" {
+				err := tagsCmd.ActivateSubcommand("retrieve_follows")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			} else {
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := tagsCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "followers":
+		switch argsCount {
+		case 2:
+			err := followersCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := followersCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()

@@ -15,6 +15,14 @@ This is a work in progress:
 * Retrieve comments on article and podcast
 * Retrieve comment with its children comments
 
+## Tags
+* Retrieve all tags. An api_key is required, so make sure you provide one with `auth` command.
+* Retrieve tags that user I follows. An api_key is required, so make sure you provide one with `auth` command.
+
+## Followers
+* Retrieve my followers. An api_key is required, so make sure you provide one with `auth` command.
+
+
 # Todo
 
 A lot of stuff.
@@ -46,14 +54,31 @@ First make sure you have golang installed
     * `./devto articles update <id>`
 
 ## Comments
-
 * Retrieve comments on article and podcast
     * `./devto comments -a_id <id>`
     * `./devto comments -p_id <id>`
 * Retrieve comments on article and podcast
     * `./devto comments -id <id>`
 
+## Tags
+* Retrieve all tags. An api_key is required, so make sure you provide one with `auth` command.
+    * `./devto tags`
+* Retrieve tags that user I follows. An api_key is required, so make sure you provide one with `auth` command.
+    * `./devto tags follows`
+
+## Followers
+* Retrieve my followers. An api_key is required, so make sure you provide one with `auth` command.
+    * `./devto followers`
+
 # TODO
+* Listings
+* Organizations
+* Podcast Episodes
+* Reading List
+* Users
+* Videos
+* Webhooks
+* Profile Images
 
 1. In  some cases the returned data could be cleaned up.
 2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
