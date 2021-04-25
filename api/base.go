@@ -12,6 +12,8 @@ var (
 	pathFollowers     = "/followers/users"
 	pathListings      = "/listings"
 	pathOrganizations = "/organizations"
+	pathPodcast       = "/podcast_episodes"
+	pathReadingList   = "/readinglist"
 
 	ErrorApiKeyMissing = errors.New("API_KEY is missing")
 	ErrorIDMissing     = errors.New("id is missing")

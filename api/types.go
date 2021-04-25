@@ -361,3 +361,45 @@ type OrganizationListingQuery struct {
 	PerPage  int32  `json:"per_page"`
 	Category string `json:"category"`
 }
+
+//PodcastEpisodesQuery ...
+type PodcastEpisodesQuery struct {
+	Page     int32  `json:"page"`
+	PerPage  int32  `json:"per_page"`
+	Username string `json:"username"`
+}
+
+//PodcastTypeResponse ...
+type PodcastTypeResponse struct {
+	TypeOf   string       `json:"type_of"`
+	ID       int32        `json:"id"`
+	Path     string       `json:"path"`
+	ImageURL string       `json:"image_url"`
+	Title    string       `json:"title"`
+	Podcast  *PodcastType `json:"podcast"`
+}
+
+//PodcastType ...
+type PodcastType struct {
+	Title    string `json:"title"`
+	Slug     string `json:"slug"`
+	ImageURL string `json:"image_url"`
+}
+
+//PodcastResponse ...
+type PodcastResponse []*PodcastTypeResponse
+
+//ReadingListQuery ...
+type ReadingListQuery OrganizationQuery
+
+//ReadingListResponse ...
+type ReadingListResponse []*ReadingListType
+
+//ReadingListType ...
+type ReadingListType struct {
+	TypeOf    string           `json:"type_of"`
+	ID        int32            `json:"id"`
+	Status    string           `json:"status"`
+	CreatedAt string           `json:"created_at"`
+	Article   *ArticleResponse `json:"article"`
+}

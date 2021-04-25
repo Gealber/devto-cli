@@ -34,6 +34,12 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Retrieve listing on an organization. 
 * Retrieve articles belonging to an organization. 
 
+## Podcasts
+* Retrieve podcast availables.
+
+## Reading Lists
+* Retrieve reading lists availables.
+
 # Build
 
 `go build -o devto`
@@ -98,6 +104,14 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
     * `./devto organizations <username> -l`
 * Retrieve articles belonging to an organization. 
     * `./devto organizations <username> -a`
+
+## Podcasts
+* Retrieve podcast availables.
+    * `./devto podcasts`
+
+## Reading Lists
+* Retrieve podcast availables.
+    * `./devto reading_lists`
 
 # TODO
 * Organizations

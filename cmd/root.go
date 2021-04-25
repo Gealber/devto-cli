@@ -26,6 +26,8 @@ var (
 	followersCmd    *FollowersCommand
 	listingsCmd     *ListingsCommand
 	organizationCmd *OrganizationsCommand
+	podcastCmd      *PodcastsCommand
+	readingListCmd  *ReadingListsCommand
 )
 
 func init() {
@@ -51,6 +53,10 @@ func init() {
 	Cli.Commands = append(Cli.Commands, listingsCmd)
 	organizationCmd = NewOrganizationsCommand()
 	Cli.Commands = append(Cli.Commands, organizationCmd)
+	podcastCmd = NewPodcastsCommand()
+	Cli.Commands = append(Cli.Commands, podcastCmd)
+	readingListCmd = NewReadingListsCommand()
+	Cli.Commands = append(Cli.Commands, readingListCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -415,6 +421,28 @@ func (cli *CommandLine) Execute() {
 			return
 		}
 		err := organizationCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "podcasts":
+		err := podcastCmd.ActivateSubcommand("retrieve")
+		if err != nil {
+			cli.printUsage()
+			return
+		}
+		err = podcastCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "reading_lists":
+		err := readingListCmd.ActivateSubcommand("retrieve")
+		if err != nil {
+			cli.printUsage()
+			return
+		}
+		err = readingListCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()

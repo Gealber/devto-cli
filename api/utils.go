@@ -201,3 +201,32 @@ func addOrganizationListingQuery(req *http.Request, queries *OrganizationListing
 		req.URL.RawQuery = q.Encode()
 	}
 }
+
+func addPodcastQuery(req *http.Request, queries *PodcastEpisodesQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
+		}
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		if len(queries.Username) > 0 {
+			q.Add("username", queries.Username)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
+
+func addReadingListingQuery(req *http.Request, queries *ReadingListQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
+		}
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
