@@ -17,14 +17,15 @@ func NewCli() *CommandLine {
 }
 
 var (
-	Cli          *CommandLine
-	adminConfig  *AdminConfig
-	authCmd      *AuthCommand
-	articlesCmd  *ArticlesCommand
-	commentsCmd  *CommentsCommand
-	tagsCmd      *TagsCommand
-	followersCmd *FollowersCommand
-	listingsCmd  *ListingsCommand
+	Cli             *CommandLine
+	adminConfig     *AdminConfig
+	authCmd         *AuthCommand
+	articlesCmd     *ArticlesCommand
+	commentsCmd     *CommentsCommand
+	tagsCmd         *TagsCommand
+	followersCmd    *FollowersCommand
+	listingsCmd     *ListingsCommand
+	organizationCmd *OrganizationsCommand
 )
 
 func init() {
@@ -48,6 +49,8 @@ func init() {
 	Cli.Commands = append(Cli.Commands, followersCmd)
 	listingsCmd = NewListingsCommand()
 	Cli.Commands = append(Cli.Commands, listingsCmd)
+	organizationCmd = NewOrganizationsCommand()
+	Cli.Commands = append(Cli.Commands, organizationCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -365,6 +368,53 @@ func (cli *CommandLine) Execute() {
 			return
 		}
 		err := listingsCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "organizations":
+		switch argsCount {
+		case 3:
+			err := organizationCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+			//username of organization
+			organizationCmd.SetData(os.Args[2])
+		case 4:
+			organizationCmd.SetData(os.Args[2])
+			switch os.Args[3] {
+			case "-u":
+				err := organizationCmd.ActivateSubcommand("retrieve_users")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			case "-l":
+				err := organizationCmd.ActivateSubcommand("retrieve_listing")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			case "-a":
+				err := organizationCmd.ActivateSubcommand("retrieve_articles")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			default:
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := organizationCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()

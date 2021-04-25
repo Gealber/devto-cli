@@ -172,3 +172,32 @@ func addListingsQuery(req *http.Request, queries *ListingQuery) {
 		req.URL.RawQuery = q.Encode()
 	}
 }
+
+func addOrganizationQuery(req *http.Request, queries *OrganizationQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
+		}
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
+
+func addOrganizationListingQuery(req *http.Request, queries *OrganizationListingQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
+		}
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		if len(queries.Category) > 0 {
+			q.Add("category", queries.Category)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}

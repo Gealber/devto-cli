@@ -28,6 +28,12 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Update a listing.
 * Reading a given listing by its id.
 
+## Organizations
+* Retrieve organization by username.
+* Retrieve users on an organization. 
+* Retrieve listing on an organization. 
+* Retrieve articles belonging to an organization. 
+
 # Build
 
 `go build -o devto`
@@ -82,6 +88,16 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
     * `./devto listings update <id>`
 * Reading a given listing by its id.
     * `./devto listings retrieve <id>`
+
+## Organizations
+* Retrieve organization by username.
+    * `./devto organizations <username>`
+* Retrieve users on an organization. 
+    * `./devto organizations <username> -u`
+* Retrieve listing on an organization. 
+    * `./devto organizations <username> -l`
+* Retrieve articles belonging to an organization. 
+    * `./devto organizations <username> -a`
 
 # TODO
 * Organizations

@@ -311,3 +311,53 @@ type ListingQuery struct {
 	PerPage  int32  `json:"per_page"`
 	Category string `json:"category"`
 }
+
+//OrganizationResponse ...
+type OrganizationResponse struct {
+	TypeOf          string `json:"type_of"`
+	Username        string `json:"username"`
+	Name            string `json:"name"`
+	Summarry        string `json:"summary"`
+	TwitterUsername string `json:"twitter_username"`
+	GithubUsername  string `json:"github_username"`
+	URL             string `json:"url"`
+	Location        string `json:"location"`
+	TechStack       string `json:"tech_stack"`
+	TagLine         string `json:"tag_line"`
+	Story           string `json:"story"`
+	JoinedAt        string `json:"joined_at"`
+	//Image 640x640
+	ProfileImage string `json:"profile_image"`
+}
+
+//OrganizationQuery ...
+type OrganizationQuery struct {
+	Page    int32 `json:"page"`
+	PerPage int32 `json:"per_page"`
+}
+
+//UserOnOrganizationResponse ...
+type UserOnOrganizationResponse []*UserOrganizationType
+
+//UserOrganizationType ...
+type UserOrganizationType struct {
+	TypeOf          string `json:"type_of"`
+	ID              int32  `json:"id"`
+	Username        string `json:"username"`
+	Name            string `json:"name"`
+	Summary         string `json:"summary"`
+	TwitterUsername string `json:"twitter_username"`
+	GithubUsername  string `json:"github_username"`
+	WebsiteURL      string `json:"website_url"`
+	Location        string `json:"location"`
+	JoinedAt        string `json:"joined_at"`
+	//Image 320x320
+	ProfileImage string `json:"profile_image"`
+}
+
+//OrganizationListingQuery ...
+type OrganizationListingQuery struct {
+	Page     int32  `json:"page"`
+	PerPage  int32  `json:"per_page"`
+	Category string `json:"category"`
+}
