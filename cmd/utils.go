@@ -79,6 +79,16 @@ func populate(v reflect.Value, value string) error {
 			v.SetInt(i)
 			return nil
 		}
+	case reflect.Int64:
+		//only put if a number is provided
+		if len(value) != 0 {
+			i, err := strconv.ParseInt(value, 10, 64)
+			if err != nil {
+				return errors.New(fmt.Sprintf("Invalid input type expected int32: %v", err))
+			}
+			v.SetInt(i)
+			return nil
+		}
 	case reflect.Bool:
 		if len(value) == 0 {
 			v.SetBool(false)

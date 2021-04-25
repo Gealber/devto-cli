@@ -30,9 +30,9 @@ func SetApiKeyHeader(req *http.Request) error {
 }
 
 //payloadReq is an util function to perform Post and Put requests
-func payloadReq(ptr interface{}, method, pathToAdd string) ([]byte, error) {
+func payloadReq(ptr interface{}, method, pathBase, pathToAdd string) ([]byte, error) {
 	client := &http.Client{}
-	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
+	url := fmt.Sprintf("%s%s", baseURL, pathBase)
 
 	//preparing payload
 	payloadBuf := new(bytes.Buffer)
@@ -152,6 +152,22 @@ func addTagsQuery(req *http.Request, queries *TagsQuery) {
 		}
 		if queries.PerPage > 0 {
 			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+}
+
+func addListingsQuery(req *http.Request, queries *ListingQuery) {
+	if queries != nil {
+		q := req.URL.Query()
+		if queries.Page > 0 {
+			q.Add("page", fmt.Sprintf("%d", queries.Page))
+		}
+		if queries.PerPage > 0 {
+			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
+		}
+		if len(queries.Category) > 0 {
+			q.Add("category", queries.Category)
 		}
 		req.URL.RawQuery = q.Encode()
 	}

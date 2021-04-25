@@ -24,6 +24,7 @@ var (
 	commentsCmd  *CommentsCommand
 	tagsCmd      *TagsCommand
 	followersCmd *FollowersCommand
+	listingsCmd  *ListingsCommand
 )
 
 func init() {
@@ -45,6 +46,8 @@ func init() {
 	Cli.Commands = append(Cli.Commands, tagsCmd)
 	followersCmd = NewFollowersCommand()
 	Cli.Commands = append(Cli.Commands, followersCmd)
+	listingsCmd = NewListingsCommand()
+	Cli.Commands = append(Cli.Commands, listingsCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -310,6 +313,58 @@ func (cli *CommandLine) Execute() {
 			return
 		}
 		err := followersCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "listings":
+		switch argsCount {
+		case 2:
+			err := listingsCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		case 3:
+			switch os.Args[2] {
+			case "create":
+				err := listingsCmd.ActivateSubcommand("create")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			default:
+				cli.printUsage()
+				return
+			}
+		case 4:
+			switch os.Args[2] {
+			case "retrieve":
+				err := listingsCmd.ActivateSubcommand("retrieve_id")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+				listingsCmd.SetData(os.Args[3])
+			case "update":
+				err := listingsCmd.ActivateSubcommand("update")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+				listingsCmd.SetData(os.Args[3])
+			default:
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := listingsCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()

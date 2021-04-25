@@ -51,7 +51,7 @@ func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesRe
 // API PATH: /articles/{id}
 // Method: PUT
 func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, error) {
-	b, err := payloadReq(article, "PUT", "/"+id)
+	b, err := payloadReq(article, "PUT", pathArticle, "/"+id)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, err
 // API PATH: /articles
 // Method: POST
 func CreateArticle(article *ArticleCreate) (*ArticleCreatedResponse, error) {
-	b, err := payloadReq(article, "POST", "")
+	b, err := payloadReq(article, "POST", pathArticle, "")
 	if err != nil {
 		return nil, err
 	}

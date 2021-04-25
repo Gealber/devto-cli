@@ -248,3 +248,66 @@ type FollowersQuery struct {
 	PerPage int32  `json:"per_page"`
 	Sort    string `json:"sort"`
 }
+
+//ListingType ...
+type ListingType struct {
+	TypeOf        string            `json:"type_of"`
+	ID            int64             `json:"id"`
+	Title         string            `json:"title"`
+	Slug          string            `json:"slug"`
+	BodyMarkdown  string            `json:"body_markdown"`
+	TagList       string            `json:"tag_list"`
+	Tags          []string          `json:"tags"`
+	Category      string            `json:"category"`
+	ProcessedHtml string            `json:"precessed_html"`
+	Published     bool              `json:"published"`
+	User          *UserType         `json:"user"`
+	Organization  *OrganizationType `json:"organization"`
+}
+
+//ListingCreateType ...
+type ListingCreateType struct {
+	Title               string   `json:"title"`
+	BodyMarkdown        string   `json:"body_markdown"`
+	Category            string   `json:"category"`
+	TagList             string   `json:"tag_list"`
+	Tags                []string `json:"tags"`
+	ExpiresAt           string   `json:"expires_at"`
+	Contact_via_connect bool     `json:"contact_via_connect"`
+	Location            string   `json:"location"`
+	OrganizationID      int64    `json:"organization_id"`
+	Action              string   `json:"action"`
+}
+
+//ListingUpdateType ...
+type ListingUpdateType struct {
+	Title               string   `json:"title"`
+	BodyMarkdown        string   `json:"body_markdown"`
+	Category            string   `json:"category"`
+	TagList             []string `json:"tag_list"`
+	Tags                string   `json:"tags"`
+	ExpiresAt           string   `json:"expires_at"`
+	Contact_via_connect bool     `json:"contact_via_connect"`
+	Location            string   `json:"location"`
+	Action              string   `json:"action"`
+}
+
+//ListingUpdate ...
+type ListingUpdate struct {
+	Listing *ListingUpdateType `json:"listing"`
+}
+
+//ListingCreate ...
+type ListingCreate struct {
+	Listing *ListingCreateType `json:"listing"`
+}
+
+//ListingResponse ...
+type ListingResponse []*ListingType
+
+//ListingQuery ...
+type ListingQuery struct {
+	Page     int32  `json:"page"`
+	PerPage  int32  `json:"per_page"`
+	Category string `json:"category"`
+}
