@@ -2,6 +2,47 @@
 
 This is a work in progress so don't a expect a full support for [Dev API(beta)](https://docs.forem.com/api/).
 
+# Table of contents
+- [Devto a cli for dev.to](#devto-a-cli-for-devto)
+- [Table of contents](#table-of-contents)
+- [Build](#build)
+- [Operations that can be performed](#operations-that-can-be-performed)
+  * [Articles](#articles)
+  * [Comments](#comments)
+  * [Tags](#tags)
+  * [Followers](#followers)
+  * [Listings](#listings)
+  * [Organizations](#organizations)
+  * [Podcasts](#podcasts)
+  * [Reading Lists](#reading-lists)
+  * [Webhooks](#webhooks)
+  * [Profile Images](#profile-images)
+- [Commands](#commands)
+  * [Articles](#articles-1)
+  * [Comments](#comments-1)
+  * [Tags](#tags-1)
+  * [Followers](#followers-1)
+  * [Listings](#listings-1)
+  * [Organizations](#organizations-1)
+  * [Podcasts](#podcasts-1)
+  * [Reading Lists](#reading-lists-1)
+  * [Webhooks](#webhooks)
+  * [Profile Images](#profile-images-1)
+- [TODO](#todo)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+# Build
+
+`go build -o devto`
+
+> **NOTE**: `First make sure you have golang installed`
+
+# Operations that can be performed
+
+> **NOTE**: Until now, this cli will only fetch the information and printing on the stdout just like it comes. 
+> In the future I have intention to clean up this and allow a read mode, so you could read and article without problem.
+
 ## Articles
 * Get articles
 * Get articles by username
@@ -53,11 +94,6 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 ## Profile Images
 * Retrieve retrieve a user or organization profile image information by its corresponding username
 
-# Build
-
-`go build -o devto`
-
-> **NOTE**: `First make sure you have golang installed`
 
 # Commands
 
@@ -134,7 +170,10 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Retrieve podcast availables.
     * `./devto reading_lists`
 
-## Webhooks. Need to be authenticated
+## Webhooks
+
+> **NOTE**: Need to be authenticated
+
 * Retrieve webhooks they have previously registered.
     * `./devto webhooks`
 * Retrieve webhooks by id
@@ -149,7 +188,7 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
     * `./devto profile_images <username>`
 
 # TODO
-Finish all the endpoints. From now on is to refactor and improve user experience.
+From now on, I need to refactor and improve user experience.
 
 1. In  some cases the returned data could be cleaned up instead of throughing the raw json to stdout.
 2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
