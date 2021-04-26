@@ -40,8 +40,7 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 
 # Operations that can be performed
 
-> **NOTE**: Until now, this cli will only fetch the information and will print it on the stdout just like it comes. 
-> In the future I have intention to clean up this and allow a read mode, so you could read an article without problem.
+![Basic Usage](usage.gif)
 
 ## Articles
 * Get articles
@@ -192,8 +191,7 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 # TODO
 From now on, I need to refactor and improve user experience.
 
-1. In  some cases the returned data could be cleaned up instead of throughing the raw json to stdout.
-2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
+1. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
 less on Linux. Not preaty sure if spend time on this one 
 2. Error handling must be improved.
-4. REFACTOR, REFACTOR AND REFACTOR.
+3. REFACTOR, REFACTOR AND REFACTOR.
