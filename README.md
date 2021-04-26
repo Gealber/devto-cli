@@ -195,4 +195,5 @@ From now on, I need to refactor and improve user experience.
 1. In  some cases the returned data could be cleaned up instead of throughing the raw json to stdout.
 2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
 less on Linux. Not preaty sure if spend time on this one 
-3. REFACTOR, REFACTOR AND REFACTOR.
+2. Error handling must be improved.
+4. REFACTOR, REFACTOR AND REFACTOR.
