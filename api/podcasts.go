@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrievePodcastEpisodes returns the podcast episodes
@@ -31,7 +30,7 @@ func RetrievePodcastEpisodes(queries *PodcastEpisodesQuery) (*PodcastResponse, e
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(PodcastResponse)
 	err = json.Unmarshal(b, data)

@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type WebhooksCommand Command
@@ -87,28 +88,31 @@ func (c *WebhooksCommand) SetData(data string) {
 
 //retrieveWebhooks ...
 func (c *WebhooksCommand) retrieveWebHooks() CommandValidationError {
-	_, err := api.RetrieveWebhooks()
+	wbhooks, err := api.RetrieveWebhooks()
 	if err != nil {
 		return err
 	}
+	display.WebhooksResponse(wbhooks)
 	return nil
 }
 
 //retrieveWebhookByID ...
 func (c *WebhooksCommand) retrieveWebhookByID() CommandValidationError {
-	_, err := api.RetrieveWebhookByID(c.Data)
+	webhook, err := api.RetrieveWebhookByID(c.Data)
 	if err != nil {
 		return err
 	}
+	display.WebhooksTypeBasic(webhook)
 	return nil
 }
 
 //deleteWebhooks ...
 func (c *WebhooksCommand) deleteWebhooks() CommandValidationError {
-	_, err := api.DeleteWebhook(c.Data)
+	webhook, err := api.DeleteWebhook(c.Data)
 	if err != nil {
 		return err
 	}
+	display.WebhooksTypeBasic(webhook)
 	return nil
 }
 
@@ -128,10 +132,11 @@ func processWebhookCreate() (*api.WebhooksCreateType, error) {
 
 //createWebhook ...
 func (c *WebhooksCommand) createWebhook(data *api.WebhooksCreateType) CommandValidationError {
-	_, err := api.CreateWebhook(data)
+	webhook, err := api.CreateWebhook(data)
 	if err != nil {
 		return err
 	}
+	display.WebhooksCreated(webhook)
 	return nil
 }
 

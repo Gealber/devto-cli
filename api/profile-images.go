@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveProfileImage retrieve a user or organization
@@ -32,7 +31,7 @@ func RetrieveProfileImage(username string) (*ProfileImageResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ProfileImageResponse)
 	err = json.Unmarshal(b, data)

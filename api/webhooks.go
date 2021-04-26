@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveWebhooks list of webhooks they have previously registered.
@@ -34,7 +33,7 @@ func RetrieveWebhooks() (*WebhooksResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(WebhooksResponse)
 	err = json.Unmarshal(b, data)
@@ -86,7 +85,7 @@ func RetrieveWebhookByID(id string) (*WebhookTypeBasic, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(WebhookTypeBasic)
 	err = json.Unmarshal(b, data)
@@ -115,11 +114,11 @@ func DeleteWebhook(id string) (*WebhookTypeBasic, error) {
 	}
 	defer response.Body.Close()
 
-	b, err := ioutil.ReadAll(response.Body)
+	_, err = ioutil.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	return nil, nil
 }

@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type PodcastsCommand Command
@@ -72,10 +73,11 @@ func processPodcastsQueries() (*api.PodcastEpisodesQuery, error) {
 
 //retrievePodcast ...
 func (c *PodcastsCommand) retrievePodcast(queries *api.PodcastEpisodesQuery) CommandValidationError {
-	_, err := api.RetrievePodcastEpisodes(queries)
+	podcast, err := api.RetrievePodcastEpisodes(queries)
 	if err != nil {
 		return err
 	}
+	display.PodcastResponse(podcast)
 	return nil
 }
 

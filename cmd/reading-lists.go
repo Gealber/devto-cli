@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type ReadingListsCommand Command
@@ -72,10 +73,11 @@ func processReadingListsQueries() (*api.CommonQuery, error) {
 
 //retrieveReadingList ...
 func (c *ReadingListsCommand) retrieveReadingList(queries *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveReadingList(queries)
+	rdlists, err := api.RetrieveReadingList(queries)
 	if err != nil {
 		return err
 	}
+	display.ReadingListResponse(rdlists)
 	return nil
 }
 

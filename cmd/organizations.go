@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type OrganizationsCommand Command
@@ -119,37 +120,41 @@ func processListingOrganizationsQueries() (*api.OrganizationListingQuery, error)
 
 //retrieveOrganization ...
 func (c *OrganizationsCommand) retrieveOrganization() CommandValidationError {
-	_, err := api.RetrieveOrganizationByUsername(c.Data)
+	organization, err := api.RetrieveOrganizationByUsername(c.Data)
 	if err != nil {
 		return err
 	}
+	display.OrganizationResponse(organization)
 	return nil
 }
 
 //retrieveUsersOnOrganization ...
 func (c *OrganizationsCommand) retrieveUsersOnOrganization(query *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveUsersOnOrganization(c.Data, query)
+	users, err := api.RetrieveUsersOnOrganization(c.Data, query)
 	if err != nil {
 		return err
 	}
+	display.UserOnOrganizationResponse(users)
 	return nil
 }
 
 //retrieveListingOnOrganization ...
 func (c *OrganizationsCommand) retrieveListingOnOrganization(query *api.OrganizationListingQuery) CommandValidationError {
-	_, err := api.RetrieveListingOnOrganization(c.Data, query)
+	listings, err := api.RetrieveListingOnOrganization(c.Data, query)
 	if err != nil {
 		return err
 	}
+	display.ListingResponse(listings)
 	return nil
 }
 
 //retrieveArticlesOnOrganization ...
 func (c *OrganizationsCommand) retrieveArticlesOnOrganization(query *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveArticlesOnOrganization(c.Data, query)
+	articles, err := api.RetrieveArticlesOnOrganization(c.Data, query)
 	if err != nil {
 		return err
 	}
+	display.RetrievedArticles(articles)
 	return nil
 }
 

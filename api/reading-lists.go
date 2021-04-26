@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveReadingList returns he client to retrieve a
@@ -38,7 +37,7 @@ func RetrieveReadingList(queries *CommonQuery) (*ReadingListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ReadingListResponse)
 	err = json.Unmarshal(b, data)

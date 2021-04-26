@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type ProfileImageCommand Command
@@ -56,10 +57,11 @@ func (c *ProfileImageCommand) SetData(data string) {
 
 //retrieveProfileImage ...
 func (c *ProfileImageCommand) retrieveProfileImage() CommandValidationError {
-	_, err := api.RetrieveProfileImage(c.Data)
+	imgPro, err := api.RetrieveProfileImage(c.Data)
 	if err != nil {
 		return err
 	}
+	display.ProfileImageResponse(imgPro)
 	return nil
 }
 

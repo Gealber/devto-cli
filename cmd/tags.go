@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type TagsCommand Command
@@ -69,19 +70,21 @@ func (c *TagsCommand) SetData(data string) {
 
 //retrieveFollows ...
 func (c *TagsCommand) retrieveFollows() CommandValidationError {
-	_, err := api.RetrieveTagsIFollow()
+	tags, err := api.RetrieveTagsIFollow()
 	if err != nil {
 		return err
 	}
+	display.FollowTagsResponse(tags)
 	return nil
 }
 
 //retrieve ...
 func (c *TagsCommand) retrieve(queries *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveTags(queries)
+	tags, err := api.RetrieveTags(queries)
 	if err != nil {
 		return err
 	}
+	display.TagsResponse(tags)
 	return nil
 }
 

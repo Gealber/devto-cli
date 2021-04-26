@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveOrganizationByUsername returns an organization by its username
@@ -31,7 +30,7 @@ func RetrieveOrganizationByUsername(username string) (*OrganizationResponse, err
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(OrganizationResponse)
 	err = json.Unmarshal(b, data)
@@ -65,7 +64,7 @@ func RetrieveUsersOnOrganization(username string, queries *CommonQuery) (*UserOn
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(UserOnOrganizationResponse)
 	err = json.Unmarshal(b, data)
@@ -99,7 +98,7 @@ func RetrieveListingOnOrganization(username string, queries *OrganizationListing
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ListingResponse)
 	err = json.Unmarshal(b, data)
@@ -133,7 +132,7 @@ func RetrieveArticlesOnOrganization(username string, queries *CommonQuery) (*Get
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)

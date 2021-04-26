@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveTagsIFollow returns the tags that I follow
@@ -34,7 +33,7 @@ func RetrieveTagsIFollow() (*FollowTagsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(FollowTagsResponse)
 	err = json.Unmarshal(b, data)
@@ -71,7 +70,7 @@ func RetrieveTags(queries *CommonQuery) (*TagsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(TagsResponse)
 	err = json.Unmarshal(b, data)
