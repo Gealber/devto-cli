@@ -2,10 +2,7 @@
 
 This is a work in progress so don't a expect a full support for [Dev API(beta)](https://docs.forem.com/api/).
 
-<details>
-<summary>
 # Table of contents
-</summary>
 - [Devto a cli for dev.to](#devto-a-cli-for-devto)
 - [Table of contents](#table-of-contents)
 - [Build](#build)
@@ -33,7 +30,6 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
   * [Webhooks](#webhooks)
   * [Profile Images](#profile-images-1)
 - [TODO](#todo)
-</details>
 
 
 # Build
