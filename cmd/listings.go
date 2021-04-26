@@ -6,6 +6,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type ListingsCommand Command
@@ -108,19 +109,21 @@ func processListingsQueries() (*api.ListingQuery, error) {
 
 //retrieveListing ...
 func (c *ListingsCommand) retrieveListing(queries *api.ListingQuery) CommandValidationError {
-	_, err := api.RetrieveListings(queries)
+	listings, err := api.RetrieveListings(queries)
 	if err != nil {
 		return err
 	}
+	display.ListingResponse(listings)
 	return nil
 }
 
 //retrieveListingByID ...
 func (c *ListingsCommand) retrieveListingByID() CommandValidationError {
-	_, err := api.RetrieveListingsByID(c.Data)
+	listings, err := api.RetrieveListingsByID(c.Data)
 	if err != nil {
 		return err
 	}
+	display.ListingResponse(listings)
 	return nil
 }
 
@@ -164,10 +167,11 @@ func (c *ListingsCommand) createListing(data *api.ListingCreate) CommandValidati
 	if !valid {
 		return errors.New("Category is not allowed")
 	}
-	_, err := api.CreateListing(data)
+	listing, err := api.CreateListing(data)
 	if err != nil {
 		return err
 	}
+	display.CreatedListing(listing)
 	return nil
 }
 
@@ -211,10 +215,11 @@ func (c *ListingsCommand) updateListing(data *api.ListingUpdate) CommandValidati
 	if !valid {
 		return errors.New("Category is not allowed")
 	}
-	_, err := api.UpdateListing(c.Data, data)
+	listing, err := api.UpdateListing(c.Data, data)
 	if err != nil {
 		return err
 	}
+	display.ModifiedArticle(listing)
 	return nil
 }
 

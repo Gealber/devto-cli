@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type FollowersCommand Command
@@ -60,10 +61,11 @@ func (c *FollowersCommand) SetData(data string) {
 
 //retrieve ...
 func (c *FollowersCommand) retrieve(queries *api.FollowersQuery) CommandValidationError {
-	_, err := api.RetrieveFollowers(queries)
+	followers, err := api.RetrieveFollowers(queries)
 	if err != nil {
 		return err
 	}
+	display.FollowersResponse(followers)
 	return nil
 }
 

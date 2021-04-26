@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveListings returns the published listings
@@ -31,7 +30,7 @@ func RetrieveListings(queries *ListingQuery) (*ListingResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ListingResponse)
 	err = json.Unmarshal(b, data)
@@ -102,7 +101,7 @@ func RetrieveListingsByID(id string) (*ListingResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ListingResponse)
 	err = json.Unmarshal(b, data)

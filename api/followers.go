@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveFollowers returns my followers
@@ -35,7 +34,7 @@ func RetrieveFollowers(query *FollowersQuery) (*FollowersResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(FollowersResponse)
 	err = json.Unmarshal(b, data)

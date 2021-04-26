@@ -67,7 +67,7 @@ func payloadReq(ptr interface{}, method, pathBase, pathToAdd string) ([]byte, er
 		return nil, err
 	}
 	//printing on the terminal
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 	return b, nil
 }
 

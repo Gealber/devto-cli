@@ -5,6 +5,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type ArticlesCommand Command
@@ -145,55 +146,61 @@ func (c *ArticlesCommand) SetData(data string) {
 
 //retrieve ...
 func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidationError {
-	_, err := api.RetrieveArticles(c.Data, queries)
+	articles, err := api.RetrieveArticles(c.Data, queries)
 	if err != nil {
 		return err
 	}
+	display.RetrievedArticles(articles)
 	return nil
 }
 
 //retrieveMe ...
 func (c *ArticlesCommand) retrieveMe(queries *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveMeArticles(queries, c.Data)
+	articles, err := api.RetrieveMeArticles(queries, c.Data)
 	if err != nil {
 		return err
 	}
+	display.RetrievedMyArticles(articles)
 	return nil
 }
 
 //retrieveByID ...
 func (c *ArticlesCommand) retrieveByID() CommandValidationError {
-	_, err := api.RetrieveArticleByID(c.Data)
+	article, err := api.RetrieveArticleByID(c.Data)
 	if err != nil {
 		return err
 	}
+	display.ModifiedArticle(article)
 	return nil
 }
 
 //retrieveArticlesVideo ...
 func (c *ArticlesCommand) retrieveArticlesVideo() CommandValidationError {
-	_, err := api.RetrieveArticlesVideo(c.Data)
+	articles, err := api.RetrieveArticlesVideo(c.Data)
 	if err != nil {
 		return err
 	}
+	display.RetrievedArticlesVideos(articles)
 	return nil
 }
 
 //retrieveLatest ...
 func (c *ArticlesCommand) retrieveLatest(queries *api.CommonQuery) CommandValidationError {
-	_, err := api.RetrieveLatestArticles(queries)
+	articles, err := api.RetrieveLatestArticles(queries)
 	if err != nil {
 		return err
 	}
+	display.RetrievedArticles(articles)
 	return nil
 }
 
 //update ...
 func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
-	_, err := api.UpdateArticle(c.Data, data)
+	article, err := api.UpdateArticle(c.Data, data)
 	if err != nil {
 		return err
 	}
+	display.ModifiedArticle(article)
 	return nil
 }
 
@@ -263,10 +270,11 @@ func processCreate() (*api.ArticleCreate, error) {
 
 //create ...
 func (c *ArticlesCommand) create(data *api.ArticleCreate) CommandValidationError {
-	_, err := api.CreateArticle(data)
+	article, err := api.CreateArticle(data)
 	if err != nil {
 		return err
 	}
+	display.ModifiedArticle(article)
 	return nil
 }
 

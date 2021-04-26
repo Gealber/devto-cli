@@ -6,6 +6,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/Gealber/devto-cli/api"
+	"github.com/Gealber/devto-cli/display"
 )
 
 type CommentsCommand Command
@@ -82,10 +83,11 @@ func (c *CommentsCommand) retrieveByAID() CommandValidationError {
 	queries := &api.CommentQuery{
 		AID: int32(aid),
 	}
-	_, err = api.RetrieveComments(queries)
+	comments, err := api.RetrieveComments(queries)
 	if err != nil {
 		return err
 	}
+	display.CommentResponse(comments)
 	return nil
 }
 
@@ -98,19 +100,21 @@ func (c *CommentsCommand) retrieveByPID() CommandValidationError {
 	queries := &api.CommentQuery{
 		PID: int32(pid),
 	}
-	_, err = api.RetrieveComments(queries)
+	comments, err := api.RetrieveComments(queries)
 	if err != nil {
 		return err
 	}
+	display.CommentResponse(comments)
 	return nil
 }
 
 //retrieveByID ...
 func (c *CommentsCommand) retrieveByID() CommandValidationError {
-	_, err := api.RetrieveComment(c.Data)
+	comment, err := api.RetrieveComment(c.Data)
 	if err != nil {
 		return err
 	}
+	display.CommentType(comment)
 	return nil
 }
 

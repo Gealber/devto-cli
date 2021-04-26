@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveComments returns the comments of a given article or podcast
@@ -31,7 +30,7 @@ func RetrieveComments(queries *CommentQuery) (*CommentsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(CommentsResponse)
 	err = json.Unmarshal(b, data)
@@ -67,7 +66,7 @@ func RetrieveComment(id string) (*CommentType, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(CommentType)
 	err = json.Unmarshal(b, data)

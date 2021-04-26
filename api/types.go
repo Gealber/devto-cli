@@ -102,12 +102,6 @@ type ModifiedArticle struct {
 	FlareTag               *FlareTagType     `json:"flare_tag"`
 }
 
-//UpdateArticleResponse ...
-type UpdateArticleResponse ModifiedArticle
-
-//ArticleCreatedResponse ...
-type ArticleCreatedResponse ModifiedArticle
-
 type ErrorResponse struct {
 	Error  string `json:"error"`
 	Status int32  `json:"status"`

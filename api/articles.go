@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 //RetrieveArticles returns the articles of a given username
@@ -37,7 +36,7 @@ func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesRe
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)
@@ -50,13 +49,13 @@ func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesRe
 //UpdateArticle update an specified article
 // API PATH: /articles/{id}
 // Method: PUT
-func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, error) {
+func UpdateArticle(id string, article *ArticleEdit) (*ModifiedArticle, error) {
 	b, err := payloadReq(article, "PUT", pathArticle, "/"+id)
 	if err != nil {
 		return nil, err
 	}
 
-	data := &UpdateArticleResponse{}
+	data := &ModifiedArticle{}
 	if len(b) > 0 {
 		err = json.Unmarshal(b, data)
 		if err != nil {
@@ -69,13 +68,13 @@ func UpdateArticle(id string, article *ArticleEdit) (*UpdateArticleResponse, err
 //CreateArticle create a new article
 // API PATH: /articles
 // Method: POST
-func CreateArticle(article *ArticleCreate) (*ArticleCreatedResponse, error) {
+func CreateArticle(article *ArticleCreate) (*ModifiedArticle, error) {
 	b, err := payloadReq(article, "POST", pathArticle, "")
 	if err != nil {
 		return nil, err
 	}
 
-	data := &ArticleCreatedResponse{}
+	data := &ModifiedArticle{}
 	if len(b) > 0 {
 		err = json.Unmarshal(b, data)
 		if err != nil {
@@ -108,7 +107,7 @@ func RetrieveLatestArticles(queries *CommonQuery) (*GetArticlesResponse, error) 
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)
@@ -142,7 +141,7 @@ func RetrieveArticleByID(id string) (*ModifiedArticle, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ModifiedArticle)
 	err = json.Unmarshal(b, data)
@@ -173,7 +172,7 @@ func RetrieveArticlesVideo(id string) (*ArticlesVideoResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ArticlesVideoResponse)
 	err = json.Unmarshal(b, data)
@@ -215,7 +214,7 @@ func RetrieveMeArticles(queries *CommonQuery, pathToAdd string) (*GetArticlesMeR
 	if err != nil {
 		return nil, err
 	}
-	fmt.Fprint(os.Stdout, string(b[:]))
+	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(GetArticlesMeResponse)
 	err = json.Unmarshal(b, data)
