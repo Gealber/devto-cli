@@ -8,6 +8,10 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Get articles with queries
 * Get articles by ID
 * Get articles with videos
+* Get articles of authenticated user
+* Get all articles of authenticated user
+* Get published articles of authenticated user
+* Get unpublished articles of authenticated user
 * Create article
 * Update article
 
@@ -40,6 +44,15 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 ## Reading Lists
 * Retrieve reading lists availables.
 
+## Webhooks. Need to be authenticated
+* Retrieve webhooks they have previously registered.
+* Retrieve webhooks by id
+* Create webhooks
+* Delete webhook
+
+## Profile Images
+* Retrieve retrieve a user or organization profile image information by its corresponding username
+
 # Build
 
 `go build -o devto`
@@ -61,6 +74,14 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
     * `./devto articles gealber -q`
 * Retrieve articles by id
     * `./devto articles <id>`
+* Get articles of authenticated user
+    * `./devto articles me`
+* Get published articles of authenticated user
+    * `./devto articles me -p`
+* Get unpublished articles of authenticated user
+    * `./devto articles me -up`
+* Get all articles of authenticated user
+    * `./devto articles me -all`
 * Retrieve articles with videos
     * `./devto articles videos`
 * Create an article
@@ -113,11 +134,22 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 * Retrieve podcast availables.
     * `./devto reading_lists`
 
+## Webhooks. Need to be authenticated
+* Retrieve webhooks they have previously registered.
+    * `./devto webhooks`
+* Retrieve webhooks by id
+    * `./devto webhooks <id>`
+* Create webhooks
+    * `./devto webhooks create`
+* Delete webhook
+    * `./devto webhooks delete <id>`
+
+## Profile Images
+* Retrieve retrieve a user or organization profile image information by its corresponding username
+    * `./devto profile_images <username>`
+
 # TODO
-* Users
-* Videos
-* Webhooks
-* Profile Images
+Finish all the endpoints. From now on is to refactor and improve user experience.
 
 1. In  some cases the returned data could be cleaned up instead of throughing the raw json to stdout.
 2. In the case of a single article we could provide some kind of `read mode`. Something similar to the command

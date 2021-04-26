@@ -38,6 +38,10 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrieve articles with specific queries",
 				Active:      false,
 			},
+			"retrieve_me": {
+				Description: "Retrieve articles of authenticated user",
+				Active:      false,
+			},
 			"create": {
 				Description: "Create article",
 				Active:      false,
@@ -75,7 +79,7 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 			return err
 		}
 	} else if c.Subcommands["retrieve_latest"].Active {
-		var queries *api.GetLatestArticleQuery
+		var queries *api.CommonQuery
 		if c.Subcommands["latest_query"].Active {
 			queries, err = processLatestQueries()
 			if err != nil {
@@ -92,6 +96,16 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 			return err
 		}
 		err = c.update(article)
+		if err != nil {
+			return err
+		}
+	} else if c.Subcommands["retrieve_me"].Active {
+		var queries *api.CommonQuery
+		queries, err = processCommonQueries()
+		if err != nil {
+			return err
+		}
+		err = c.retrieveMe(queries)
 		if err != nil {
 			return err
 		}
@@ -138,6 +152,15 @@ func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidati
 	return nil
 }
 
+//retrieveMe ...
+func (c *ArticlesCommand) retrieveMe(queries *api.CommonQuery) CommandValidationError {
+	_, err := api.RetrieveMeArticles(queries, c.Data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 //retrieveByID ...
 func (c *ArticlesCommand) retrieveByID() CommandValidationError {
 	_, err := api.RetrieveArticleByID(c.Data)
@@ -157,7 +180,7 @@ func (c *ArticlesCommand) retrieveArticlesVideo() CommandValidationError {
 }
 
 //retrieveLatest ...
-func (c *ArticlesCommand) retrieveLatest(queries *api.GetLatestArticleQuery) CommandValidationError {
+func (c *ArticlesCommand) retrieveLatest(queries *api.CommonQuery) CommandValidationError {
 	_, err := api.RetrieveLatestArticles(queries)
 	if err != nil {
 		return err
@@ -174,11 +197,23 @@ func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
 	return nil
 }
 
+//processCommonQueries read the data from the User input and put
+//that data inside an CommonQuery structure
+func processCommonQueries() (*api.CommonQuery, error) {
+	//to store field from CommonQuery
+	queries := new(api.CommonQuery)
+	err := processInput(queries)
+	if err != nil {
+		return nil, err
+	}
+	return queries, nil
+}
+
 //processLatestQueries read the data from the User input and put
 //that data inside an GetArticleQuery structure
-func processLatestQueries() (*api.GetLatestArticleQuery, error) {
-	//to store field from GetLatestArticleQuery
-	queries := new(api.GetLatestArticleQuery)
+func processLatestQueries() (*api.CommonQuery, error) {
+	//to store field from CommonQuery
+	queries := new(api.CommonQuery)
 	err := processInput(queries)
 	if err != nil {
 		return nil, err

@@ -77,7 +77,7 @@ func (c *TagsCommand) retrieveFollows() CommandValidationError {
 }
 
 //retrieve ...
-func (c *TagsCommand) retrieve(queries *api.TagsQuery) CommandValidationError {
+func (c *TagsCommand) retrieve(queries *api.CommonQuery) CommandValidationError {
 	_, err := api.RetrieveTags(queries)
 	if err != nil {
 		return err
@@ -87,9 +87,9 @@ func (c *TagsCommand) retrieve(queries *api.TagsQuery) CommandValidationError {
 
 //processTagsQueries read the data from the User input and put
 //that data inside an TagsQuery structure
-func processTagsQueries() (*api.TagsQuery, error) {
-	//to store field from TagsQuery
-	queries := new(api.TagsQuery)
+func processTagsQueries() (*api.CommonQuery, error) {
+	//to store field from CommonQuery
+	queries := new(api.CommonQuery)
 	err := processInput(queries)
 	if err != nil {
 		return nil, err

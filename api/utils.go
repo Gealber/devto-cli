@@ -102,7 +102,7 @@ func addQueries(req *http.Request, queries *GetArticleQuery) {
 	}
 }
 
-func addLatesQueries(req *http.Request, queries *GetLatestArticleQuery) {
+func addCommonQueries(req *http.Request, queries *CommonQuery) {
 	if queries != nil {
 		q := req.URL.Query()
 		if queries.Page > 0 {
@@ -144,19 +144,6 @@ func addFollowerQuery(req *http.Request, queries *FollowersQuery) {
 	}
 }
 
-func addTagsQuery(req *http.Request, queries *TagsQuery) {
-	if queries != nil {
-		q := req.URL.Query()
-		if queries.Page > 0 {
-			q.Add("page", fmt.Sprintf("%d", queries.Page))
-		}
-		if queries.PerPage > 0 {
-			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
-		}
-		req.URL.RawQuery = q.Encode()
-	}
-}
-
 func addListingsQuery(req *http.Request, queries *ListingQuery) {
 	if queries != nil {
 		q := req.URL.Query()
@@ -168,19 +155,6 @@ func addListingsQuery(req *http.Request, queries *ListingQuery) {
 		}
 		if len(queries.Category) > 0 {
 			q.Add("category", queries.Category)
-		}
-		req.URL.RawQuery = q.Encode()
-	}
-}
-
-func addOrganizationQuery(req *http.Request, queries *OrganizationQuery) {
-	if queries != nil {
-		q := req.URL.Query()
-		if queries.Page > 0 {
-			q.Add("page", fmt.Sprintf("%d", queries.Page))
-		}
-		if queries.PerPage > 0 {
-			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		req.URL.RawQuery = q.Encode()
 	}
@@ -213,19 +187,6 @@ func addPodcastQuery(req *http.Request, queries *PodcastEpisodesQuery) {
 		}
 		if len(queries.Username) > 0 {
 			q.Add("username", queries.Username)
-		}
-		req.URL.RawQuery = q.Encode()
-	}
-}
-
-func addReadingListingQuery(req *http.Request, queries *ReadingListQuery) {
-	if queries != nil {
-		q := req.URL.Query()
-		if queries.Page > 0 {
-			q.Add("page", fmt.Sprintf("%d", queries.Page))
-		}
-		if queries.PerPage > 0 {
-			q.Add("per_page", fmt.Sprintf("%d", queries.PerPage))
 		}
 		req.URL.RawQuery = q.Encode()
 	}

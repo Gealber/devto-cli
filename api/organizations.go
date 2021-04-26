@@ -44,7 +44,7 @@ func RetrieveOrganizationByUsername(username string) (*OrganizationResponse, err
 //RetrieveUsersOnOrganization returns list of users on a given organization
 // API PATH: /organizations/{username}/users
 // Method: GET
-func RetrieveUsersOnOrganization(username string, queries *OrganizationQuery) (*UserOnOrganizationResponse, error) {
+func RetrieveUsersOnOrganization(username string, queries *CommonQuery) (*UserOnOrganizationResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
@@ -53,7 +53,7 @@ func RetrieveUsersOnOrganization(username string, queries *OrganizationQuery) (*
 	}
 
 	req.URL.Path += "/" + username + "/users"
-	addOrganizationQuery(req, queries)
+	addCommonQueries(req, queries)
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -112,7 +112,7 @@ func RetrieveListingOnOrganization(username string, queries *OrganizationListing
 //RetrieveArticlesOnOrganization returns list of articles belonging a given organization
 // API PATH: /organizations/{username}/articles
 // Method: GET
-func RetrieveArticlesOnOrganization(username string, queries *OrganizationQuery) (*GetArticlesResponse, error) {
+func RetrieveArticlesOnOrganization(username string, queries *CommonQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
@@ -121,7 +121,7 @@ func RetrieveArticlesOnOrganization(username string, queries *OrganizationQuery)
 	}
 
 	req.URL.Path += "/" + username + "/articles"
-	addOrganizationQuery(req, queries)
+	addCommonQueries(req, queries)
 
 	response, err := client.Do(req)
 	if err != nil {

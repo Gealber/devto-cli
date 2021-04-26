@@ -14,6 +14,8 @@ var (
 	pathOrganizations = "/organizations"
 	pathPodcast       = "/podcast_episodes"
 	pathReadingList   = "/readinglist"
+	pathWebhooks      = "/webhooks"
+	pathProfileImage  = "/profile_images"
 
 	ErrorApiKeyMissing = errors.New("API_KEY is missing")
 	ErrorIDMissing     = errors.New("id is missing")

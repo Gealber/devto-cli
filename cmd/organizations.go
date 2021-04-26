@@ -94,10 +94,10 @@ func (c *OrganizationsCommand) SetData(data string) {
 }
 
 //processOrganizationsQueries read the data from the User input and put
-//that data inside an OrganizationQuery structure
-func processOrganizationsQueries() (*api.OrganizationQuery, error) {
-	//to store field from OrganizationQuery
-	queries := new(api.OrganizationQuery)
+//that data inside an CommonQuery structure
+func processOrganizationsQueries() (*api.CommonQuery, error) {
+	//to store field from CommonQuery
+	queries := new(api.CommonQuery)
 	err := processInput(queries)
 	if err != nil {
 		return nil, err
@@ -127,7 +127,7 @@ func (c *OrganizationsCommand) retrieveOrganization() CommandValidationError {
 }
 
 //retrieveUsersOnOrganization ...
-func (c *OrganizationsCommand) retrieveUsersOnOrganization(query *api.OrganizationQuery) CommandValidationError {
+func (c *OrganizationsCommand) retrieveUsersOnOrganization(query *api.CommonQuery) CommandValidationError {
 	_, err := api.RetrieveUsersOnOrganization(c.Data, query)
 	if err != nil {
 		return err
@@ -145,7 +145,7 @@ func (c *OrganizationsCommand) retrieveListingOnOrganization(query *api.Organiza
 }
 
 //retrieveArticlesOnOrganization ...
-func (c *OrganizationsCommand) retrieveArticlesOnOrganization(query *api.OrganizationQuery) CommandValidationError {
+func (c *OrganizationsCommand) retrieveArticlesOnOrganization(query *api.CommonQuery) CommandValidationError {
 	_, err := api.RetrieveArticlesOnOrganization(c.Data, query)
 	if err != nil {
 		return err

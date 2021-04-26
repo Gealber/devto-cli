@@ -28,6 +28,8 @@ var (
 	organizationCmd *OrganizationsCommand
 	podcastCmd      *PodcastsCommand
 	readingListCmd  *ReadingListsCommand
+	webhookCmd      *WebhooksCommand
+	profileImageCmd *ProfileImageCommand
 )
 
 func init() {
@@ -57,6 +59,10 @@ func init() {
 	Cli.Commands = append(Cli.Commands, podcastCmd)
 	readingListCmd = NewReadingListsCommand()
 	Cli.Commands = append(Cli.Commands, readingListCmd)
+	webhookCmd = NewWebhooksCmd()
+	Cli.Commands = append(Cli.Commands, webhookCmd)
+	profileImageCmd = NewProfileImageCmd()
+	Cli.Commands = append(Cli.Commands, profileImageCmd)
 }
 
 func (cli *CommandLine) printUsage() {
@@ -178,6 +184,25 @@ func (cli *CommandLine) Execute() {
 				}
 			case "videos":
 				err := articlesCmd.ActivateSubcommand("retrieve_videos")
+				if err != nil {
+					fmt.Fprintf(os.Stdout, "%v\n", err)
+					cli.printUsage()
+					return
+				}
+			case "me":
+				if argsCount == 4 {
+					if os.Args[3] == "-p" {
+						articlesCmd.SetData("/published")
+					} else if os.Args[3] == "-up" {
+						articlesCmd.SetData("/unpublished")
+					} else if os.Args[3] == "-all" {
+						articlesCmd.SetData("/all")
+					} else {
+						cli.printUsage()
+						return
+					}
+				}
+				err := articlesCmd.ActivateSubcommand("retrieve_me")
 				if err != nil {
 					fmt.Fprintf(os.Stdout, "%v\n", err)
 					cli.printUsage()
@@ -443,6 +468,77 @@ func (cli *CommandLine) Execute() {
 			return
 		}
 		err = readingListCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "webhooks":
+		switch argsCount {
+		case 2:
+			err := webhookCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+		case 3:
+			switch os.Args[2] {
+			case "create":
+				err := webhookCmd.ActivateSubcommand("create")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+			default:
+				//refactor
+				if os.Args[2] != "delete" {
+					//assuming want to retrieve by id
+					err := webhookCmd.ActivateSubcommand("retrieve_id")
+					if err != nil {
+						cli.printUsage()
+						return
+					}
+					webhookCmd.SetData(os.Args[2])
+				} else {
+					cli.printUsage()
+					return
+				}
+			}
+		case 4:
+			switch os.Args[2] {
+			case "delete":
+				err := webhookCmd.ActivateSubcommand("delete")
+				if err != nil {
+					cli.printUsage()
+					return
+				}
+				webhookCmd.SetData(os.Args[3])
+			default:
+				cli.printUsage()
+				return
+			}
+		default:
+			cli.printUsage()
+			return
+		}
+		err := webhookCmd.Run()
+		if err != nil {
+			fmt.Fprintf(os.Stdout, "%v\n", err)
+			cli.printUsage()
+		}
+	case "profile_images":
+		switch argsCount {
+		case 3:
+			err := profileImageCmd.ActivateSubcommand("retrieve")
+			if err != nil {
+				cli.printUsage()
+				return
+			}
+			profileImageCmd.SetData(os.Args[2])
+		default:
+			cli.printUsage()
+			return
+		}
+		err := profileImageCmd.Run()
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "%v\n", err)
 			cli.printUsage()

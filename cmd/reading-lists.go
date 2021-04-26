@@ -60,9 +60,9 @@ func (c *ReadingListsCommand) SetData(data string) {
 
 //processReadingListsQueries read the data from the User input and put
 //that data inside an ListingQuery structure
-func processReadingListsQueries() (*api.ReadingListQuery, error) {
+func processReadingListsQueries() (*api.CommonQuery, error) {
 	//to store field from ReadingListEpisodesQuery
-	queries := new(api.ReadingListQuery)
+	queries := new(api.CommonQuery)
 	err := processInput(queries)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func processReadingListsQueries() (*api.ReadingListQuery, error) {
 }
 
 //retrieveReadingList ...
-func (c *ReadingListsCommand) retrieveReadingList(queries *api.ReadingListQuery) CommandValidationError {
+func (c *ReadingListsCommand) retrieveReadingList(queries *api.CommonQuery) CommandValidationError {
 	_, err := api.RetrieveReadingList(queries)
 	if err != nil {
 		return err

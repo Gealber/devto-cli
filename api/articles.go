@@ -88,7 +88,7 @@ func CreateArticle(article *ArticleCreate) (*ArticleCreatedResponse, error) {
 //RetrieveLatestArticles returns latest articles
 // API PATH: /articles/latest
 // Method: GET
-func RetrieveLatestArticles(queries *GetLatestArticleQuery) (*GetArticlesResponse, error) {
+func RetrieveLatestArticles(queries *CommonQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle+"/"+"latest")
 	req, err := http.NewRequest("GET", url, nil)
@@ -96,7 +96,7 @@ func RetrieveLatestArticles(queries *GetLatestArticleQuery) (*GetArticlesRespons
 		return nil, err
 	}
 
-	addLatesQueries(req, queries)
+	addCommonQueries(req, queries)
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -176,6 +176,48 @@ func RetrieveArticlesVideo(id string) (*ArticlesVideoResponse, error) {
 	fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ArticlesVideoResponse)
+	err = json.Unmarshal(b, data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
+//RetrieveMeArticles returns the articles of the authenticated user
+// API PATHs:
+// * /articles/me
+// * /articles/me/published,
+// * /articles/me/unpublished
+// * /articles/me/all
+// Method: GET
+func RetrieveMeArticles(queries *CommonQuery, pathToAdd string) (*GetArticlesMeResponse, error) {
+	client := &http.Client{}
+	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	//setting value of api-key header
+	if err := SetApiKeyHeader(req); err != nil {
+		return nil, err
+	}
+	addCommonQueries(req, queries)
+	req.URL.Path += "/me" + pathToAdd
+
+	response, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Fprint(os.Stdout, string(b[:]))
+
+	data := new(GetArticlesMeResponse)
 	err = json.Unmarshal(b, data)
 	if err != nil {
 		return nil, err

@@ -8,25 +8,19 @@ import (
 	"os"
 )
 
-//RetrieveReadingList returns he client to retrieve a
-//list of readinglist reactions along with the related
-//article for the authenticated user.
-// API PATH: /readinglist
+//RetrieveProfileImage retrieve a user or organization
+//profile image information by its corresponding username
+// API PATH: /profile_images
 // Method: GET
-func RetrieveReadingList(queries *CommonQuery) (*ReadingListResponse, error) {
+func RetrieveProfileImage(username string) (*ProfileImageResponse, error) {
 	client := &http.Client{}
-	url := fmt.Sprintf("%s%s", baseURL, pathReadingList)
+	url := fmt.Sprintf("%s%s", baseURL, pathProfileImage)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	//setting value of api-key header
-	if err := SetApiKeyHeader(req); err != nil {
-		return nil, err
-	}
-	//adding queries
-	addCommonQueries(req, queries)
+	req.URL.Path += "/" + username
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -40,7 +34,7 @@ func RetrieveReadingList(queries *CommonQuery) (*ReadingListResponse, error) {
 	}
 	fmt.Fprint(os.Stdout, string(b[:]))
 
-	data := new(ReadingListResponse)
+	data := new(ProfileImageResponse)
 	err = json.Unmarshal(b, data)
 	if err != nil {
 		return nil, err

@@ -1,5 +1,11 @@
 package api
 
+//CommonQuery ...
+type CommonQuery struct {
+	Page    int32 `json:"page"`
+	PerPage int32 `json:"per_page"`
+}
+
 //ArticleResponse ...
 type ArticleResponse struct {
 	TypeOf                 string            `json:"type_of"`
@@ -31,6 +37,35 @@ type ArticleResponse struct {
 	Organization           *OrganizationType `json:"organization"`
 	FlareTag               *FlareTagType     `json:"flare_tag"`
 }
+
+//ArticleMeResponse ...
+type ArticleMeResponse struct {
+	TypeOf                 string            `json:"type_of"`
+	ID                     int32             `json:"id"`
+	Title                  string            `json:"title"`
+	Description            string            `json:"description"`
+	CoverImage             string            `json:"cover_image"`
+	PublishedAt            string            `json:"published_at"`
+	Published              bool              `json:"published"`
+	TagList                []string          `json:"tag_list"`
+	Slug                   string            `json:"slug"`
+	Path                   string            `json:"path"`
+	URL                    string            `json:"url"`
+	CanonicalURL           string            `json:"canonical_url"`
+	CommentsCount          int32             `json:"comments_count"`
+	PositiveReactionsCount int32             `json:"positive_reactions_count"`
+	PublicReactionsCount   int32             `json:"public_reactions_count"`
+	PageViewsCount         int32             `json:"page_views_count"`
+	PublishedTimestamp     string            `json:"published_timestamp"`
+	BodyMarkdown           string            `json:"body_markdown"`
+	User                   *UserType         `json:"user"`
+	ReadingTimeMinutes     int32             `json:"reading_time_minutes"`
+	Organization           *OrganizationType `json:"organization"`
+	FlareTag               *FlareTagType     `json:"flare_tag"`
+}
+
+//GetArticlesMeResponse ...
+type GetArticlesMeResponse []*ArticleMeResponse
 
 //GetArticlesResponse
 type GetArticlesResponse []*ArticleResponse
@@ -161,10 +196,7 @@ type GetArticleQuery struct {
 
 //GetLatestArticleQuery store the queries provided
 //by the user on a Get latest articles
-type GetLatestArticleQuery struct {
-	Page    int32 `json:"page"`
-	PerPage int32 `json:"per_page"`
-}
+type GetLatestArticleQuery CommonQuery
 
 //ArticleVideoResponse ...
 type ArticleVideoResponse struct {
@@ -222,10 +254,7 @@ type TagType struct {
 }
 
 //TagsQuery ...
-type TagsQuery struct {
-	Page    int32 `json:"page"`
-	PerPage int32 `json:"per_page"`
-}
+type TagsQuery CommonQuery
 
 //FollowerType ...
 type FollowerType struct {
@@ -331,10 +360,7 @@ type OrganizationResponse struct {
 }
 
 //OrganizationQuery ...
-type OrganizationQuery struct {
-	Page    int32 `json:"page"`
-	PerPage int32 `json:"per_page"`
-}
+type OrganizationQuery CommonQuery
 
 //UserOnOrganizationResponse ...
 type UserOnOrganizationResponse []*UserOrganizationType
@@ -390,7 +416,7 @@ type PodcastType struct {
 type PodcastResponse []*PodcastTypeResponse
 
 //ReadingListQuery ...
-type ReadingListQuery OrganizationQuery
+type ReadingListQuery CommonQuery
 
 //ReadingListResponse ...
 type ReadingListResponse []*ReadingListType
@@ -402,4 +428,53 @@ type ReadingListType struct {
 	Status    string           `json:"status"`
 	CreatedAt string           `json:"created_at"`
 	Article   *ArticleResponse `json:"article"`
+}
+
+//WebhooksType ...
+type WebhooksType struct {
+	TypeOf    string `json:"type_of"`
+	ID        int64  `json:"id"`
+	Source    string `json:"source"`
+	TargetURL string `json:"target_url"`
+	Events    string `json:"events"`
+	CreatedAt string `json:"created_at"`
+}
+
+//WebhooksResponse ...
+type WebhooksResponse []*WebhooksType
+
+//WebhookDataCreate ...
+type WebhookDataCreate struct {
+	Source    string   `json:"source"`
+	TargetURL string   `json:"target_url"`
+	Events    []string `json:"events"`
+}
+
+//WebhooksCreateType ...
+type WebhooksCreateType struct {
+	WebhookEndpoint *WebhookDataCreate `json:"webhook_endpoint"`
+}
+
+//WebhookTypeBasic ...
+type WebhookTypeBasic struct {
+	TypeOf    string    `json:"type_of"`
+	ID        int64     `json:"id"`
+	Source    string    `json:"source"`
+	TargetURL string    `json:"target_url"`
+	Events    string    `json:"events"`
+	CreatedAt string    `json:"created_at"`
+	User      *UserType `json:"user"`
+}
+
+//WebhookCreatedResponse...
+type WebhookCreatedResponse WebhookTypeBasic
+
+//ProfileImageResponse ...
+type ProfileImageResponse struct {
+	TypeOf  string `json:"type_of"`
+	ImageOf string `json:"image_of"`
+	//640x640
+	ProfileImage string `json:"profile_image"`
+	//90x90
+	ProfileImage90 string `json:"profile_image_90"`
 }

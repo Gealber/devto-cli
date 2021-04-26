@@ -47,7 +47,7 @@ func RetrieveTagsIFollow() (*FollowTagsResponse, error) {
 //RetrieveTags returns all available tags
 // API PATH: /tags
 // Method: GET
-func RetrieveTags(queries *TagsQuery) (*TagsResponse, error) {
+func RetrieveTags(queries *CommonQuery) (*TagsResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathTags)
 	req, err := http.NewRequest("GET", url, nil)
@@ -59,7 +59,7 @@ func RetrieveTags(queries *TagsQuery) (*TagsResponse, error) {
 	if err := SetApiKeyHeader(req); err != nil {
 		return nil, err
 	}
-	addTagsQuery(req, queries)
+	addCommonQueries(req, queries)
 
 	response, err := client.Do(req)
 	if err != nil {
