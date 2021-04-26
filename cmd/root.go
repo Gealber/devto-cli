@@ -67,7 +67,7 @@ func init() {
 
 func (cli *CommandLine) printUsage() {
 	fmt.Println("\033[1;36mUsage:\033[0m")
-	fmt.Printf("  \033[3;32mdevto\033[0m \033[3;33m<command> <subcommand>\033[0m\n")
+	fmt.Printf("  \033[3;32mdevto\033[0m \033[3;33m<command> <data> <subcommand> <flags>\033[0m\n")
 	fmt.Println()
 	fmt.Println("\033[1;36mCore commands:\033[0m")
 	for _, cmd := range cli.Commands {

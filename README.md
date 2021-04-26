@@ -18,6 +18,7 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
   * [Webhooks](#webhooks)
   * [Profile Images](#profile-images)
 - [Commands](#commands)
+  * [Auth](#auth)
   * [Articles](#articles-1)
   * [Comments](#comments-1)
   * [Tags](#tags-1)
@@ -40,8 +41,8 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 
 # Operations that can be performed
 
-> **NOTE**: Until now, this cli will only fetch the information and printing on the stdout just like it comes. 
-> In the future I have intention to clean up this and allow a read mode, so you could read and article without problem.
+> **NOTE**: Until now, this cli will only fetch the information and will print it on the stdout just like it comes. 
+> In the future I have intention to clean up this and allow a read mode, so you could read an article without problem.
 
 ## Articles
 * Get articles
@@ -97,9 +98,11 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 
 # Commands
 
-## Articles
+## Auth
 * Store api_key
     * `./devto auth <api_key>`
+
+## Articles
 * Retrieve articles
     * `./devto articles`
 * Retrieve articles with queries
