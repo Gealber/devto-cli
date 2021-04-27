@@ -31,6 +31,10 @@ func NewArticlesCmd() *ArticlesCommand {
 				Description: "Retrieve article by ID",
 				Active:      false,
 			},
+			"display_body": {
+				Description: "Display the body markdown of the article with ID",
+				Active:      false,
+			},
 			"latest_query": {
 				Description: "Unable queries on retrieve latest articles",
 				Active:      false,
@@ -70,7 +74,8 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 				return err
 			}
 		} else if c.Subcommands["retrieve_id"].Active {
-			err := c.retrieveByID()
+			body := c.Subcommands["display_body"].Active
+			err := c.retrieveByID(body)
 			if err != nil {
 				return err
 			}
@@ -166,12 +171,16 @@ func (c *ArticlesCommand) retrieveMe(queries *api.CommonQuery) CommandValidation
 }
 
 //retrieveByID ...
-func (c *ArticlesCommand) retrieveByID() CommandValidationError {
+func (c *ArticlesCommand) retrieveByID(body bool) CommandValidationError {
 	article, err := api.RetrieveArticleByID(c.Data)
 	if err != nil {
 		return err
 	}
-	display.ModifiedArticle(article)
+	if body {
+		display.ModifiedArticleBody(article)
+	} else {
+		display.ModifiedArticle(article)
+	}
 	return nil
 }
 

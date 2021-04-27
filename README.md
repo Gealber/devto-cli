@@ -126,6 +126,8 @@ This is just optional
     * `./devto articles gealber -q`
 * Retrieve articles by id
     * `./devto articles <id>`
+* Retrieve body of an article
+    * `./devto articles <id> -b`
 * Get articles of authenticated user
     * `./devto articles me`
 * Get published articles of authenticated user

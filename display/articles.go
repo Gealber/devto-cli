@@ -30,6 +30,12 @@ func ModifiedArticle(article *api.ModifiedArticle) {
 	fmt.Println()
 }
 
+func ModifiedArticleBody(article *api.ModifiedArticle) {
+	fmt.Println()
+	fmt.Println(article.BodyMarkdown)
+	fmt.Println()
+}
+
 func RetrievedArticlesVideos(data *api.ArticlesVideoResponse) {
 	fmt.Println()
 	header()

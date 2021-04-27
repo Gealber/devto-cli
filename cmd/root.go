@@ -240,6 +240,12 @@ func (cli *CommandLine) Execute() {
 					}
 					return false
 				}()
+				body := func() bool {
+					if os.Args[argsCount-1] == "-b" {
+						return true
+					}
+					return false
+				}()
 				id := func() string {
 					if argsCount > 2 && os.Args[2] != "-q" {
 						if _, err := strconv.ParseInt(os.Args[2], 10, 32); err != nil {
@@ -265,6 +271,14 @@ func (cli *CommandLine) Execute() {
 				if len(id) > 0 {
 					articlesCmd.SetData(id)
 					err := articlesCmd.ActivateSubcommand("retrieve_id")
+					if err != nil {
+						fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
+						cli.printUsage()
+						return
+					}
+				}
+				if body {
+					err := articlesCmd.ActivateSubcommand("display_body")
 					if err != nil {
 						fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 						cli.printUsage()
