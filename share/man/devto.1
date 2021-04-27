@@ -21,11 +21,21 @@ Retrieve or update admin configuration from dev.to
 Retrieve, Create and Update the articles
 .RS
 .BR SUBCOMMANDS: 
-.BR create, 
-.BR update, 
-.BR latest, 
-.BR videos, 
-.BR me
+
+.BR create:
+Create and article.
+
+.BR update: 
+Update an article.
+
+.BR latest:
+Retrieve the latest articles.
+
+.BR videos: 
+Retrieve the articles with videos.
+
+.BR me:
+Retrieve the articles of the authenticated user.
 .RE
 
 .BR auth
@@ -53,7 +63,10 @@ Retrieve followers
 Retrieve and Create listings
 .RS
 .BR SUBCOMMANDS: 
-.BR create 
+
+.BR create:
+Create a new listing. 
+
 .RE
 
 .BR organizations
@@ -126,9 +139,14 @@ Retrieve articles by username
 $ devto articles <username>
 .RE
 
-Create an articles 
+Create an article 
 .RS
 $ devto articles create
+.RE
+
+Update an article 
+.RS
+$ devto articles update <id>
 .RE
 
 .SH BUGS

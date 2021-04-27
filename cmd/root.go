@@ -114,8 +114,7 @@ func (cli *CommandLine) Execute() {
 		//need to find a better way to display the data
 		err := authCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "admin-config":
 		switch argsCount {
@@ -136,15 +135,14 @@ func (cli *CommandLine) Execute() {
 		}
 		err := adminConfig.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "articles":
 		switch {
 		case argsCount == 2:
 			err := articlesCmd.ActivateSubcommand("retrieve")
 			if err != nil {
-				fmt.Fprintf(os.Stdout, "%v\n", err)
+				fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 				cli.printUsage()
 				return
 			}
@@ -153,7 +151,7 @@ func (cli *CommandLine) Execute() {
 			case "update":
 				err := articlesCmd.ActivateSubcommand("update")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
@@ -167,14 +165,14 @@ func (cli *CommandLine) Execute() {
 			case "create":
 				err := articlesCmd.ActivateSubcommand("create")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
 			case "latest":
 				err := articlesCmd.ActivateSubcommand("retrieve_latest")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
@@ -188,7 +186,7 @@ func (cli *CommandLine) Execute() {
 				if query {
 					err := articlesCmd.ActivateSubcommand("latest_query")
 					if err != nil {
-						fmt.Fprintf(os.Stdout, "%v\n", err)
+						fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 						cli.printUsage()
 						return
 					}
@@ -196,7 +194,7 @@ func (cli *CommandLine) Execute() {
 			case "videos":
 				err := articlesCmd.ActivateSubcommand("retrieve_videos")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
@@ -215,14 +213,14 @@ func (cli *CommandLine) Execute() {
 				}
 				err := articlesCmd.ActivateSubcommand("retrieve_me")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
 			default:
 				err := articlesCmd.ActivateSubcommand("retrieve")
 				if err != nil {
-					fmt.Fprintf(os.Stdout, "%v\n", err)
+					fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 					cli.printUsage()
 					return
 				}
@@ -256,7 +254,7 @@ func (cli *CommandLine) Execute() {
 				if query {
 					err := articlesCmd.ActivateSubcommand("retrieve_query")
 					if err != nil {
-						fmt.Fprintf(os.Stdout, "%v\n", err)
+						fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 						cli.printUsage()
 						return
 					}
@@ -268,7 +266,7 @@ func (cli *CommandLine) Execute() {
 					articlesCmd.SetData(id)
 					err := articlesCmd.ActivateSubcommand("retrieve_id")
 					if err != nil {
-						fmt.Fprintf(os.Stdout, "%v\n", err)
+						fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 						cli.printUsage()
 						return
 					}
@@ -279,8 +277,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := articlesCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "comments":
 		switch argsCount {
@@ -314,8 +311,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := commentsCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "tags":
 		switch argsCount {
@@ -342,8 +338,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := tagsCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "followers":
 		switch argsCount {
@@ -359,8 +354,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := followersCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "listings":
 		switch argsCount {
@@ -411,8 +405,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := listingsCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "organizations":
 		switch argsCount {
@@ -458,8 +451,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := organizationCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "podcasts":
 		err := podcastCmd.ActivateSubcommand("retrieve")
@@ -469,8 +461,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err = podcastCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "reading_lists":
 		err := readingListCmd.ActivateSubcommand("retrieve")
@@ -480,8 +471,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err = readingListCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "webhooks":
 		switch argsCount {
@@ -533,8 +523,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := webhookCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	case "profile_images":
 		switch argsCount {
@@ -551,8 +540,7 @@ func (cli *CommandLine) Execute() {
 		}
 		err := profileImageCmd.Run()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "%v\n", err)
-			cli.printUsage()
+			fmt.Fprintf(os.Stdout, "%v\n", filterError(err))
 		}
 	default:
 		cli.printUsage()

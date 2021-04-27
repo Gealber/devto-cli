@@ -74,7 +74,7 @@ func populate(v reflect.Value, value string) error {
 		if len(value) != 0 {
 			i, err := strconv.ParseInt(value, 10, 32)
 			if err != nil {
-				return errors.New(fmt.Sprintf("Invalid input type expected int32: %v", err))
+				return err
 			}
 			v.SetInt(i)
 			return nil
@@ -84,7 +84,7 @@ func populate(v reflect.Value, value string) error {
 		if len(value) != 0 {
 			i, err := strconv.ParseInt(value, 10, 64)
 			if err != nil {
-				return errors.New(fmt.Sprintf("Invalid input type expected int32: %v", err))
+				return err
 			}
 			v.SetInt(i)
 			return nil
@@ -96,7 +96,7 @@ func populate(v reflect.Value, value string) error {
 		}
 		b, err := strconv.ParseBool(value)
 		if err != nil {
-			return errors.New(fmt.Sprintf("Invalid input type expected bool: %v", err))
+			return err
 		}
 		v.SetBool(b)
 
