@@ -1,4 +1,5 @@
-# Devto a cli for dev.to
+# Devto a cli for dev.to 
+![Build status](https://github.com/Gealber/devto-cli/actions/workflows/go.yml/badge.svg?event=push)
 
 This is a work in progress so don't a expect a full support for [Dev API(beta)](https://docs.forem.com/api/).
 
