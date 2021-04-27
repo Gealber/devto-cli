@@ -212,8 +212,6 @@ The field `body_markdown` on operations like the creation of an article, expect 
 With the content of the article you want to published.
 
 # TODO
-From now on, I need to refactor and improve user experience.
+From now on, I need to refactor.
 
-1. In the case of a single article we could provide some kind of `read mode`. Something similar to the command
-less on Linux. Not preaty sure if spend time on this one 
-2. REFACTOR, REFACTOR AND REFACTOR.
+1. REFACTOR, REFACTOR AND REFACTOR.
