@@ -74,6 +74,7 @@ func (c *ArticlesCommand) Run() CommandValidationError {
 			if err != nil {
 				return err
 			}
+			return nil
 		}
 		err = c.retrieve(queries)
 		if err != nil {
