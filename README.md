@@ -6,6 +6,8 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 - [Devto a cli for dev.to](#devto-a-cli-for-devto)
 - [Table of contents](#table-of-contents)
 - [Build](#build)
+- [Install](#install)
+- [Manpage](#manpage)
 - [Operations that can be performed](#operations-that-can-be-performed)
   * [Articles](#articles)
   * [Comments](#comments)
@@ -29,14 +31,27 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
   * [Reading Lists](#reading-lists-1)
   * [Webhooks](#webhooks)
   * [Profile Images](#profile-images-1)
+- [Valid aclaration](#valid-aclaration)
 - [TODO](#todo)
 
 
 # Build
 
+`make build`
+or
 `go build -o devto`
 
 > **NOTE**: `First make sure you have golang installed`
+
+# Install
+
+`make install`
+
+# Manpage
+This is just optional
+
+`sudo make manpage`
+
 
 # Operations that can be performed
 
@@ -187,6 +202,11 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 ## Profile Images
 * Retrieve retrieve a user or organization profile image information by its corresponding username
     * `./devto profile_images <username>`
+
+# Valid aclaration
+
+The field `body_markdown` on operations like the creation of an article, expect a path to a markdown file.
+With the content of the article you want to published.
 
 # TODO
 From now on, I need to refactor and improve user experience.
