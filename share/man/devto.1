@@ -1,0 +1,141 @@
+.TH DEVTO 1
+.SH NAME
+devto \- CLI for dev.to based on DEV API(beta) https://docs.forem.com/api/.
+
+.SH SYNOPSIS
+.BR devto  
+[COMMANDS]  
+[DATA]  
+[SUBCOMMANDS]  
+[FLAGS]
+
+.SH DESCRIPTION
+This documentation describes the devto cli.
+.BR devto
+cli may be managed using the following COMMANDS;
+
+.BR admin-config
+Retrieve or update admin configuration from dev.to
+
+.BR articles 
+Retrieve, Create and Update the articles
+.RS
+.BR SUBCOMMANDS: 
+.BR create, 
+.BR update, 
+.BR latest, 
+.BR videos, 
+.BR me
+.RE
+
+.BR auth
+Store api_key on a config file. The default name of the config file is .devto
+
+.BR comments
+Retrieve comments
+.RS
+.BR FLAGS: 
+
+.BR -a_id:
+id of article 
+
+.BR -p_id:
+id of podcasts episode
+
+.BR -id:
+id del comentario
+.RE
+
+.BR followers
+Retrieve followers
+
+.BR listings
+Retrieve and Create listings
+.RS
+.BR SUBCOMMANDS: 
+.BR create 
+.RE
+
+.BR organizations
+Retrieve organizations
+.RS
+.BR DATA: 
+organization username 
+
+.BR FLAGS: 
+
+.BR -u:
+Return users on an organization.
+
+.BR -l:
+listings on an organization
+
+.BR -a:
+articles on an organization
+.RE
+
+.BR podcasts
+Retrieve podcasts
+
+.BR profile_images
+Retrieve, Create and Update the profile image
+
+.BR reading_lists
+Retrieve reading lists.
+
+.BR tags
+Retrieve tags availables.
+.RS
+.BR SUBCOMMANDS: 
+
+.BR follows: 
+retrieves tags that user authenticated is following
+.RE
+
+.BR webhooks
+Retrieve, Create and Delete the webhooks
+.RS
+.BR SUBCOMMANDS: 
+
+.BR create: 
+creates a webhook
+
+.BR delete: 
+delete webhook
+.RE
+
+.SH EXAMPLES
+
+Store api_key
+.RS
+$ devto auth <api_key>
+.RE
+
+Retrieve articles
+.RS
+$ devto articles
+.RE
+
+Retrieve articles with queries
+.RS
+$ devto articles -q
+.RE
+
+Retrieve articles by username
+.RS
+$ devto articles <username>
+.RE
+
+Create an articles 
+.RS
+$ devto articles create
+.RE
+
+.SH BUGS
+If you run into any bugs, have suggestions or patches, please contact me at
+.BR <gealbermorales@gmail.com>
+
+.SH AUTHOR
+.BR Devto
+developed by Gealber Morales
+.BR <gealbermorales@gmail.com>

@@ -19,17 +19,17 @@ func NewCli() *CommandLine {
 var (
 	Cli             *CommandLine
 	adminConfig     *AdminConfig
-	authCmd         *AuthCommand
 	articlesCmd     *ArticlesCommand
+	authCmd         *AuthCommand
 	commentsCmd     *CommentsCommand
-	tagsCmd         *TagsCommand
 	followersCmd    *FollowersCommand
 	listingsCmd     *ListingsCommand
 	organizationCmd *OrganizationsCommand
 	podcastCmd      *PodcastsCommand
+	profileImageCmd *ProfileImageCommand
 	readingListCmd  *ReadingListsCommand
 	webhookCmd      *WebhooksCommand
-	profileImageCmd *ProfileImageCommand
+	tagsCmd         *TagsCommand
 )
 
 func init() {
@@ -41,28 +41,39 @@ func init() {
 	//commands
 	adminConfig = NewAdminConfigCmd()
 	Cli.Commands = append(Cli.Commands, adminConfig)
-	authCmd = NewAuthCmd()
-	Cli.Commands = append(Cli.Commands, authCmd)
+
 	articlesCmd = NewArticlesCmd()
 	Cli.Commands = append(Cli.Commands, articlesCmd)
+
+	authCmd = NewAuthCmd()
+	Cli.Commands = append(Cli.Commands, authCmd)
+
 	commentsCmd = NewCommentsCommand()
 	Cli.Commands = append(Cli.Commands, commentsCmd)
-	tagsCmd = NewTagsCommand()
-	Cli.Commands = append(Cli.Commands, tagsCmd)
+
 	followersCmd = NewFollowersCommand()
 	Cli.Commands = append(Cli.Commands, followersCmd)
+
 	listingsCmd = NewListingsCommand()
 	Cli.Commands = append(Cli.Commands, listingsCmd)
+
 	organizationCmd = NewOrganizationsCommand()
 	Cli.Commands = append(Cli.Commands, organizationCmd)
+
 	podcastCmd = NewPodcastsCommand()
 	Cli.Commands = append(Cli.Commands, podcastCmd)
-	readingListCmd = NewReadingListsCommand()
-	Cli.Commands = append(Cli.Commands, readingListCmd)
-	webhookCmd = NewWebhooksCmd()
-	Cli.Commands = append(Cli.Commands, webhookCmd)
+
 	profileImageCmd = NewProfileImageCmd()
 	Cli.Commands = append(Cli.Commands, profileImageCmd)
+
+	readingListCmd = NewReadingListsCommand()
+	Cli.Commands = append(Cli.Commands, readingListCmd)
+
+	tagsCmd = NewTagsCommand()
+	Cli.Commands = append(Cli.Commands, tagsCmd)
+
+	webhookCmd = NewWebhooksCmd()
+	Cli.Commands = append(Cli.Commands, webhookCmd)
 }
 
 func (cli *CommandLine) printUsage() {

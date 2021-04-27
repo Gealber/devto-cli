@@ -13,7 +13,7 @@ type WebhooksCommand Command
 func NewWebhooksCmd() *WebhooksCommand {
 	return &WebhooksCommand{
 		Name:        "webhooks",
-		Description: "Retrieve, Create and Update the webhooks",
+		Description: "Retrieve, Create and Delete the webhooks",
 		Subcommands: map[string]*Subcommand{
 			"retrieve": {
 				Description: "Retrieve webhooks",
