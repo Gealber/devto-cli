@@ -8,16 +8,24 @@ import (
 )
 
 var (
-	NetworkError = errors.New(toBoldRed("NETWORK ERROR: Make sure you have internet connection."))
-	InputError   = errors.New(toBoldRed("INPUT ERROR: Make sure you entered a correct type argument."))
+	NetworkTimeoutError   = errors.New(toBoldRed("TIMEOUT NETWORK ERROR: Make sure you have internet connection."))
+	NetworkTemporaryError = errors.New(toBoldRed("TEMPORARY NETWORK ERROR: Try again, this error occurs when there's some."))
+	InputError            = errors.New(toBoldRed("INPUT ERROR: Make sure you entered a correct type argument."))
 )
 
 func toBoldRed(text string) string {
 	return fmt.Sprintf("\033[1;31m%s\033[0m", text)
 }
 
-func isNetworkError(err error) bool {
-	if _, ok := err.(net.Error); ok {
+func isNetworkTimeoutError(err error) bool {
+	if nErr, ok := err.(net.Error); ok && nErr.Timeout() {
+		return true
+	}
+	return false
+}
+
+func isNetworkTemporaryError(err error) bool {
+	if nErr, ok := err.(net.Error); ok && nErr.Temporary() {
 		return true
 	}
 	return false
@@ -32,8 +40,10 @@ func isStrconvError(err error) bool {
 
 func filterError(err error) error {
 	switch {
-	case isNetworkError(err):
-		return NetworkError
+	case isNetworkTemporaryError(err):
+		return NetworkTemporaryError
+	case isNetworkTimeoutError(err):
+		return NetworkTimeoutError
 	case isStrconvError(err):
 		return InputError
 	default:
