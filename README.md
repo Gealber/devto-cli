@@ -10,6 +10,7 @@ This is a work in progress so don't a expect a full support for [Dev API(beta)](
 - [Build](#build)
 - [Install](#install)
 - [Manpage](#manpage)
+- [Bash autocompletion](#bash-autocompletion)
 - [Operations that can be performed](#operations-that-can-be-performed)
   * [Articles](#articles)
   * [Comments](#comments)
@@ -53,6 +54,14 @@ or
 This is just optional
 
 `sudo make manpage`
+
+# Bash autocompletion
+Also optional
+
+```bash
+make bash_autocomplete
+source $HOME/.bashrc
+```
 
 
 # Operations that can be performed

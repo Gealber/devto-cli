@@ -1,6 +1,16 @@
 .DEFAULT_GOAL := help
 .PHONY : build
 
+ifneq ($(OS), Windows_NT)
+        UNAME_S := $(shell uname -s)
+        ifeq ($(UNAME_S), Linux)
+                # supporting source command otherwise /bin/sh
+                # will be taken as default, which doesn't support source
+				# neccesary for bash_autocomplete
+                SHELL := /bin/bash
+        endif
+endif
+
 GOPATH := $(shell go env GOPATH)
 DESTDIR?=
 PREFIX?=/usr/local
@@ -40,6 +50,9 @@ manpage: ## Create manpage. Need sudo permissions
 install: ## Install binary and allow manpage
 	go build $(BUILD_OPTS) -o $(INSTALL_DIR)/$(APP)
 
+bash_autocompletion: ## Enable Bash autocompletation
+	source bash/enable.sh
+	 
 clean: ## Cleaning binary
 	rm -f ${APP}
 
