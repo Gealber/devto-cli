@@ -59,8 +59,8 @@ This is just optional
 
 ### Create articles
 ![Create article](carticles.gif)
-### Podcasts
-![Podcasts](Podcasts.gif)
+### Listings
+![Listings](Listings.gif)
 
 ## Articles
 * Get articles
