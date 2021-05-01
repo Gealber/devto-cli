@@ -57,14 +57,10 @@ This is just optional
 
 # Operations that can be performed
 
-### Articles 
-![Articles](articles.gif)
 ### Create articles
-![Create article](carticle.gif)
+![Create article](carticles.gif)
 ### Podcasts
 ![Podcasts](Podcasts.gif)
-### Listings
-![Listings](Listings.gif)
 
 ## Articles
 * Get articles

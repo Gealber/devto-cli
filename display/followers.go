@@ -9,7 +9,12 @@ import (
 
 func FollowersResponse(followers *api.FollowersResponse) {
 	fmt.Println()
-	header()
+	if len(*followers) > 0 {
+		header()
+	} else {
+		fmt.Println(toBoldRed("Sorry no followes"))
+		return
+	}
 	fmt.Println()
 	for i, follower := range *followers {
 		fmt.Println()

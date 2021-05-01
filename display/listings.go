@@ -9,7 +9,12 @@ import (
 
 func ListingResponse(listings *api.ListingResponse) {
 	fmt.Println()
-	header()
+	if len(*listings) > 0 {
+		header()
+	} else {
+		fmt.Println(toBoldRed("Sorry no listings"))
+		return
+	}
 	fmt.Println()
 	for i, listing := range *listings {
 		fmt.Println()

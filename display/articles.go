@@ -9,7 +9,12 @@ import (
 
 func RetrievedArticles(data *api.GetArticlesResponse) {
 	fmt.Println()
-	header()
+	if len(*data) > 0 {
+		header()
+	} else {
+		fmt.Println(toBoldRed("Sorry no articles"))
+		return
+	}
 	fmt.Println()
 	for i, article := range *data {
 		fmt.Println()
@@ -38,7 +43,12 @@ func ModifiedArticleBody(article *api.ModifiedArticle) {
 
 func RetrievedArticlesVideos(data *api.ArticlesVideoResponse) {
 	fmt.Println()
-	header()
+	if len(*data) > 0 {
+		header()
+	} else {
+		fmt.Println(toBoldRed("Sorry no articles"))
+		return
+	}
 	fmt.Println()
 	for i, article := range *data {
 		fmt.Println()
@@ -52,8 +62,12 @@ func RetrievedArticlesVideos(data *api.ArticlesVideoResponse) {
 
 func RetrievedMyArticles(data *api.GetArticlesMeResponse) {
 	fmt.Println()
-	header()
-	fmt.Println()
+	if len(*data) > 0 {
+		header()
+	} else {
+		fmt.Println(toBoldRed("Sorry no articles"))
+		return
+	}
 	for i, article := range *data {
 		fmt.Println()
 		id := fmt.Sprintf("%d. #%s:", i+1, strconv.FormatInt(int64(article.ID), 10))
