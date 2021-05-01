@@ -11,6 +11,7 @@ var (
 	NetworkTimeoutError   = errors.New(toBoldRed("TIMEOUT NETWORK ERROR: Make sure you have internet connection."))
 	NetworkTemporaryError = errors.New(toBoldRed("TEMPORARY NETWORK ERROR: Try again, this error occurs when there's some."))
 	InputError            = errors.New(toBoldRed("INPUT ERROR: Make sure you entered a correct type argument."))
+	ApiKeyMissing         = errors.New(toBoldRed("API_KEY is empty, provide one with the auth command"))
 )
 
 func toBoldRed(text string) string {

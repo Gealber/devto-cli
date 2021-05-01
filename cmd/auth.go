@@ -25,7 +25,7 @@ func (c *AuthCommand) Run() CommandValidationError {
 	defer file.Close()
 
 	if c.Data == "" {
-		return NewCommandError("API_KEY is empty")
+		return ApiKeyMissing
 	}
 	_, err = file.Write([]byte(c.Data))
 	if err != nil {
