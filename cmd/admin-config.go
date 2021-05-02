@@ -1,8 +1,10 @@
 package cmd
 
 import (
-	"github.com/Gealber/devto-cli/api"
+	"context"
 	"text/tabwriter"
+
+	"github.com/Gealber/devto-cli/api"
 )
 
 type AdminConfig Command
@@ -51,13 +53,15 @@ func (c *AdminConfig) Helper(tw *tabwriter.Writer) {
 
 //retrieve ...
 func (c *AdminConfig) retrieve() CommandValidationError {
-	api.RetrieveAdminConfig()
+	ctx := context.Background()
+	api.RetrieveAdminConfig(ctx)
 	return nil
 }
 
 //update ...
 func (c *AdminConfig) update() CommandValidationError {
-	api.UpdateAdminConfig()
+	ctx := context.Background()
+	api.UpdateAdminConfig(ctx)
 	return nil
 }
 

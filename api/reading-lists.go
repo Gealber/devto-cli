@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -12,13 +13,14 @@ import (
 //article for the authenticated user.
 // API PATH: /readinglist
 // Method: GET
-func RetrieveReadingList(queries *CommonQuery) (*ReadingListResponse, error) {
+func RetrieveReadingList(ctx context.Context, queries *CommonQuery) (*ReadingListResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathReadingList)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveWebhooks list of webhooks they have previously registered.
 // API PATH: /webhooks
 // Method: GET
-func RetrieveWebhooks() (*WebhooksResponse, error) {
+func RetrieveWebhooks(ctx context.Context) (*WebhooksResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathWebhooks)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {
@@ -46,8 +48,8 @@ func RetrieveWebhooks() (*WebhooksResponse, error) {
 //CreateWebhook create a new webhook
 // API PATH: /webhooks
 // Method: POST
-func CreateWebhook(listing *WebhooksCreateType) (*WebhookCreatedResponse, error) {
-	b, err := payloadReq(listing, "POST", pathWebhooks, "")
+func CreateWebhook(ctx context.Context, listing *WebhooksCreateType) (*WebhookCreatedResponse, error) {
+	b, err := payloadReq(ctx, listing, "POST", pathWebhooks, "")
 	if err != nil {
 		return nil, err
 	}
@@ -65,13 +67,14 @@ func CreateWebhook(listing *WebhooksCreateType) (*WebhookCreatedResponse, error)
 //RetrieveWebhookByID returns a webhook by id
 // API PATH: /webhook/{id}
 // Method: GET
-func RetrieveWebhookByID(id string) (*WebhookTypeBasic, error) {
+func RetrieveWebhookByID(ctx context.Context, id string) (*WebhookTypeBasic, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathWebhooks)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + id
 
@@ -98,13 +101,14 @@ func RetrieveWebhookByID(id string) (*WebhookTypeBasic, error) {
 //DeleteWebhook delete a webhook by id
 // API PATH: /webhook/{id}
 // Method: DELETE
-func DeleteWebhook(id string) (*WebhookTypeBasic, error) {
+func DeleteWebhook(ctx context.Context, id string) (*WebhookTypeBasic, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathWebhooks)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + id
 

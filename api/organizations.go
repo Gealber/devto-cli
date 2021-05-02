@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveOrganizationByUsername returns an organization by its username
 // API PATH: /organizations/{username}
 // Method: GET
-func RetrieveOrganizationByUsername(username string) (*OrganizationResponse, error) {
+func RetrieveOrganizationByUsername(ctx context.Context, username string) (*OrganizationResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + username
 
@@ -43,13 +45,14 @@ func RetrieveOrganizationByUsername(username string) (*OrganizationResponse, err
 //RetrieveUsersOnOrganization returns list of users on a given organization
 // API PATH: /organizations/{username}/users
 // Method: GET
-func RetrieveUsersOnOrganization(username string, queries *CommonQuery) (*UserOnOrganizationResponse, error) {
+func RetrieveUsersOnOrganization(ctx context.Context, username string, queries *CommonQuery) (*UserOnOrganizationResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + username + "/users"
 	addCommonQueries(req, queries)
@@ -77,13 +80,14 @@ func RetrieveUsersOnOrganization(username string, queries *CommonQuery) (*UserOn
 //RetrieveListingOnOrganization returns list of listings on a given organization
 // API PATH: /organizations/{username}/listings
 // Method: GET
-func RetrieveListingOnOrganization(username string, queries *OrganizationListingQuery) (*ListingResponse, error) {
+func RetrieveListingOnOrganization(ctx context.Context, username string, queries *OrganizationListingQuery) (*ListingResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + username + "/listings"
 	addOrganizationListingQuery(req, queries)
@@ -111,13 +115,14 @@ func RetrieveListingOnOrganization(username string, queries *OrganizationListing
 //RetrieveArticlesOnOrganization returns list of articles belonging a given organization
 // API PATH: /organizations/{username}/articles
 // Method: GET
-func RetrieveArticlesOnOrganization(username string, queries *CommonQuery) (*GetArticlesResponse, error) {
+func RetrieveArticlesOnOrganization(ctx context.Context, username string, queries *CommonQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathOrganizations)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + username + "/articles"
 	addCommonQueries(req, queries)

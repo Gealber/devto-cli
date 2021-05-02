@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"text/tabwriter"
@@ -83,7 +84,8 @@ func (c *CommentsCommand) retrieveByAID() CommandValidationError {
 	queries := &api.CommentQuery{
 		AID: int32(aid),
 	}
-	comments, err := api.RetrieveComments(queries)
+	ctx := context.Background()
+	comments, err := api.RetrieveComments(ctx, queries)
 	if err != nil {
 		return err
 	}
@@ -100,7 +102,8 @@ func (c *CommentsCommand) retrieveByPID() CommandValidationError {
 	queries := &api.CommentQuery{
 		PID: int32(pid),
 	}
-	comments, err := api.RetrieveComments(queries)
+	ctx := context.Background()
+	comments, err := api.RetrieveComments(ctx, queries)
 	if err != nil {
 		return err
 	}
@@ -110,7 +113,8 @@ func (c *CommentsCommand) retrieveByPID() CommandValidationError {
 
 //retrieveByID ...
 func (c *CommentsCommand) retrieveByID() CommandValidationError {
-	comment, err := api.RetrieveComment(c.Data)
+	ctx := context.Background()
+	comment, err := api.RetrieveComment(ctx, c.Data)
 	if err != nil {
 		return err
 	}

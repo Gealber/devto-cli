@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -73,7 +74,8 @@ func processPodcastsQueries() (*api.PodcastEpisodesQuery, error) {
 
 //retrievePodcast ...
 func (c *PodcastsCommand) retrievePodcast(queries *api.PodcastEpisodesQuery) CommandValidationError {
-	podcast, err := api.RetrievePodcastEpisodes(queries)
+	ctx := context.Background()
+	podcast, err := api.RetrievePodcastEpisodes(ctx, queries)
 	if err != nil {
 		return err
 	}

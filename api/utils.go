@@ -2,6 +2,7 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -33,7 +34,7 @@ func SetApiKeyHeader(req *http.Request) error {
 }
 
 //payloadReq is an util function to perform Post and Put requests
-func payloadReq(ptr interface{}, method, pathBase, pathToAdd string) ([]byte, error) {
+func payloadReq(ctx context.Context, ptr interface{}, method, pathBase, pathToAdd string) ([]byte, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathBase)
 
@@ -48,6 +49,8 @@ func payloadReq(ptr interface{}, method, pathBase, pathToAdd string) ([]byte, er
 	if err != nil {
 		return nil, err
 	}
+
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {

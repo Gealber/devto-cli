@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -70,7 +71,8 @@ func (c *TagsCommand) SetData(data string) {
 
 //retrieveFollows ...
 func (c *TagsCommand) retrieveFollows() CommandValidationError {
-	tags, err := api.RetrieveTagsIFollow()
+	ctx := context.Background()
+	tags, err := api.RetrieveTagsIFollow(ctx)
 	if err != nil {
 		return err
 	}
@@ -80,7 +82,8 @@ func (c *TagsCommand) retrieveFollows() CommandValidationError {
 
 //retrieve ...
 func (c *TagsCommand) retrieve(queries *api.CommonQuery) CommandValidationError {
-	tags, err := api.RetrieveTags(queries)
+	ctx := context.Background()
+	tags, err := api.RetrieveTags(ctx, queries)
 	if err != nil {
 		return err
 	}

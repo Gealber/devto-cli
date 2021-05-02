@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -73,7 +74,8 @@ func processReadingListsQueries() (*api.CommonQuery, error) {
 
 //retrieveReadingList ...
 func (c *ReadingListsCommand) retrieveReadingList(queries *api.CommonQuery) CommandValidationError {
-	rdlists, err := api.RetrieveReadingList(queries)
+	ctx := context.Background()
+	rdlists, err := api.RetrieveReadingList(ctx, queries)
 	if err != nil {
 		return err
 	}

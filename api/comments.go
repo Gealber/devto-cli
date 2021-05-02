@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveComments returns the comments of a given article or podcast
 // API PATH: /comments?a_id=<id> or /comments?p_id=<id>
 // Method: GET
-func RetrieveComments(queries *CommentQuery) (*CommentsResponse, error) {
+func RetrieveComments(ctx context.Context, queries *CommentQuery) (*CommentsResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathComment)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	addCommentQuery(req, queries)
 
@@ -43,13 +45,14 @@ func RetrieveComments(queries *CommentQuery) (*CommentsResponse, error) {
 //RetrieveComment returns the comment
 // API PATH: /comments/{id}
 // Method: GET
-func RetrieveComment(id string) (*CommentType, error) {
+func RetrieveComment(ctx context.Context, id string) (*CommentType, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathComment)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	if len(id) == 0 {
 		return nil, ErrorIDMissing

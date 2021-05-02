@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveListings returns the published listings
 // API PATH: /listings
 // Method: GET
-func RetrieveListings(queries *ListingQuery) (*ListingResponse, error) {
+func RetrieveListings(ctx context.Context, queries *ListingQuery) (*ListingResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathListings)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	addListingsQuery(req, queries)
 
@@ -43,8 +45,8 @@ func RetrieveListings(queries *ListingQuery) (*ListingResponse, error) {
 //CreateListing create a new listing
 // API PATH: /listings
 // Method: POST
-func CreateListing(listing *ListingCreate) (*ListingType, error) {
-	b, err := payloadReq(listing, "POST", pathListings, "")
+func CreateListing(ctx context.Context, listing *ListingCreate) (*ListingType, error) {
+	b, err := payloadReq(ctx, listing, "POST", pathListings, "")
 	if err != nil {
 		return nil, err
 	}
@@ -62,8 +64,8 @@ func CreateListing(listing *ListingCreate) (*ListingType, error) {
 //UpdateListing update a listing
 // API PATH: /listings/{id}
 // Method: PUT
-func UpdateListing(id string, listing *ListingUpdate) (*ModifiedArticle, error) {
-	b, err := payloadReq(listing, "PUT", pathListings, "/"+id)
+func UpdateListing(ctx context.Context, id string, listing *ListingUpdate) (*ModifiedArticle, error) {
+	b, err := payloadReq(ctx, listing, "PUT", pathListings, "/"+id)
 	if err != nil {
 		return nil, err
 	}
@@ -81,13 +83,14 @@ func UpdateListing(id string, listing *ListingUpdate) (*ModifiedArticle, error) 
 //RetrieveListingByID returns a listing by id
 // API PATH: /listings/{id}
 // Method: GET
-func RetrieveListingsByID(id string) (*ListingResponse, error) {
+func RetrieveListingsByID(ctx context.Context, id string) (*ListingResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathListings)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + id
 

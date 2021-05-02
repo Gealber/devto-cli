@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrievePodcastEpisodes returns the podcast episodes
 // API PATH: /podcast_episodes
 // Method: GET
-func RetrievePodcastEpisodes(queries *PodcastEpisodesQuery) (*PodcastResponse, error) {
+func RetrievePodcastEpisodes(ctx context.Context, queries *PodcastEpisodesQuery) (*PodcastResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathPodcast)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	addPodcastQuery(req, queries)
 

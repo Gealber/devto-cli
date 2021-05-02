@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveFollowers returns my followers
 // API PATH: /followers/users
 // Method: GET
-func RetrieveFollowers(query *FollowersQuery) (*FollowersResponse, error) {
+func RetrieveFollowers(ctx context.Context, query *FollowersQuery) (*FollowersResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathFollowers)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {

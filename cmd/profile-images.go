@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -57,7 +58,8 @@ func (c *ProfileImageCommand) SetData(data string) {
 
 //retrieveProfileImage ...
 func (c *ProfileImageCommand) retrieveProfileImage() CommandValidationError {
-	imgPro, err := api.RetrieveProfileImage(c.Data)
+	ctx := context.Background()
+	imgPro, err := api.RetrieveProfileImage(ctx, c.Data)
 	if err != nil {
 		return err
 	}

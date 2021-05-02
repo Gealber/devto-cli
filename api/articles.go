@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,15 @@ import (
 //RetrieveArticles returns the articles of a given username
 // API PATH: /articles
 // Method: GET
-func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesResponse, error) {
+func RetrieveArticles(ctx context.Context, username string, queries *GetArticleQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if len(username) > 0 {
@@ -49,8 +52,8 @@ func RetrieveArticles(username string, queries *GetArticleQuery) (*GetArticlesRe
 //UpdateArticle update an specified article
 // API PATH: /articles/{id}
 // Method: PUT
-func UpdateArticle(id string, article *ArticleEdit) (*ModifiedArticle, error) {
-	b, err := payloadReq(article, "PUT", pathArticle, "/"+id)
+func UpdateArticle(ctx context.Context, id string, article *ArticleEdit) (*ModifiedArticle, error) {
+	b, err := payloadReq(ctx, article, "PUT", pathArticle, "/"+id)
 	if err != nil {
 		return nil, err
 	}
@@ -68,8 +71,8 @@ func UpdateArticle(id string, article *ArticleEdit) (*ModifiedArticle, error) {
 //CreateArticle create a new article
 // API PATH: /articles
 // Method: POST
-func CreateArticle(article *ArticleCreate) (*ModifiedArticle, error) {
-	b, err := payloadReq(article, "POST", pathArticle, "")
+func CreateArticle(ctx context.Context, article *ArticleCreate) (*ModifiedArticle, error) {
+	b, err := payloadReq(ctx, article, "POST", pathArticle, "")
 	if err != nil {
 		return nil, err
 	}
@@ -87,13 +90,15 @@ func CreateArticle(article *ArticleCreate) (*ModifiedArticle, error) {
 //RetrieveLatestArticles returns latest articles
 // API PATH: /articles/latest
 // Method: GET
-func RetrieveLatestArticles(queries *CommonQuery) (*GetArticlesResponse, error) {
+func RetrieveLatestArticles(ctx context.Context, queries *CommonQuery) (*GetArticlesResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle+"/"+"latest")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	req = req.WithContext(ctx)
 
 	addCommonQueries(req, queries)
 
@@ -120,13 +125,14 @@ func RetrieveLatestArticles(queries *CommonQuery) (*GetArticlesResponse, error) 
 //RetrieveArticleByID returns the article
 // API PATH: /articles/{id}
 // Method: GET
-func RetrieveArticleByID(id string) (*ModifiedArticle, error) {
+func RetrieveArticleByID(ctx context.Context, id string) (*ModifiedArticle, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	req.URL.Path += "/" + id
@@ -154,13 +160,14 @@ func RetrieveArticleByID(id string) (*ModifiedArticle, error) {
 //RetrieveArticlesVideo returns the articles with videos
 // API PATH: /videos
 // Method: GET
-func RetrieveArticlesVideo(id string) (*ArticlesVideoResponse, error) {
+func RetrieveArticlesVideo(ctx context.Context, id string) (*ArticlesVideoResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, "/videos")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -189,13 +196,14 @@ func RetrieveArticlesVideo(id string) (*ArticlesVideoResponse, error) {
 // * /articles/me/unpublished
 // * /articles/me/all
 // Method: GET
-func RetrieveMeArticles(queries *CommonQuery, pathToAdd string) (*GetArticlesMeResponse, error) {
+func RetrieveMeArticles(ctx context.Context, queries *CommonQuery, pathToAdd string) (*GetArticlesMeResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathArticle)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {

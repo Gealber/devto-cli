@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -88,7 +89,8 @@ func (c *WebhooksCommand) SetData(data string) {
 
 //retrieveWebhooks ...
 func (c *WebhooksCommand) retrieveWebHooks() CommandValidationError {
-	wbhooks, err := api.RetrieveWebhooks()
+	ctx := context.Background()
+	wbhooks, err := api.RetrieveWebhooks(ctx)
 	if err != nil {
 		return err
 	}
@@ -98,7 +100,8 @@ func (c *WebhooksCommand) retrieveWebHooks() CommandValidationError {
 
 //retrieveWebhookByID ...
 func (c *WebhooksCommand) retrieveWebhookByID() CommandValidationError {
-	webhook, err := api.RetrieveWebhookByID(c.Data)
+	ctx := context.Background()
+	webhook, err := api.RetrieveWebhookByID(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -108,7 +111,8 @@ func (c *WebhooksCommand) retrieveWebhookByID() CommandValidationError {
 
 //deleteWebhooks ...
 func (c *WebhooksCommand) deleteWebhooks() CommandValidationError {
-	webhook, err := api.DeleteWebhook(c.Data)
+	ctx := context.Background()
+	webhook, err := api.DeleteWebhook(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -132,7 +136,8 @@ func processWebhookCreate() (*api.WebhooksCreateType, error) {
 
 //createWebhook ...
 func (c *WebhooksCommand) createWebhook(data *api.WebhooksCreateType) CommandValidationError {
-	webhook, err := api.CreateWebhook(data)
+	ctx := context.Background()
+	webhook, err := api.CreateWebhook(ctx, data)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -61,7 +62,8 @@ func (c *FollowersCommand) SetData(data string) {
 
 //retrieve ...
 func (c *FollowersCommand) retrieve(queries *api.FollowersQuery) CommandValidationError {
-	followers, err := api.RetrieveFollowers(queries)
+	ctx := context.Background()
+	followers, err := api.RetrieveFollowers(ctx, queries)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -120,7 +121,8 @@ func processListingOrganizationsQueries() (*api.OrganizationListingQuery, error)
 
 //retrieveOrganization ...
 func (c *OrganizationsCommand) retrieveOrganization() CommandValidationError {
-	organization, err := api.RetrieveOrganizationByUsername(c.Data)
+	ctx := context.Background()
+	organization, err := api.RetrieveOrganizationByUsername(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -130,7 +132,8 @@ func (c *OrganizationsCommand) retrieveOrganization() CommandValidationError {
 
 //retrieveUsersOnOrganization ...
 func (c *OrganizationsCommand) retrieveUsersOnOrganization(query *api.CommonQuery) CommandValidationError {
-	users, err := api.RetrieveUsersOnOrganization(c.Data, query)
+	ctx := context.Background()
+	users, err := api.RetrieveUsersOnOrganization(ctx, c.Data, query)
 	if err != nil {
 		return err
 	}
@@ -140,7 +143,8 @@ func (c *OrganizationsCommand) retrieveUsersOnOrganization(query *api.CommonQuer
 
 //retrieveListingOnOrganization ...
 func (c *OrganizationsCommand) retrieveListingOnOrganization(query *api.OrganizationListingQuery) CommandValidationError {
-	listings, err := api.RetrieveListingOnOrganization(c.Data, query)
+	ctx := context.Background()
+	listings, err := api.RetrieveListingOnOrganization(ctx, c.Data, query)
 	if err != nil {
 		return err
 	}
@@ -150,7 +154,8 @@ func (c *OrganizationsCommand) retrieveListingOnOrganization(query *api.Organiza
 
 //retrieveArticlesOnOrganization ...
 func (c *OrganizationsCommand) retrieveArticlesOnOrganization(query *api.CommonQuery) CommandValidationError {
-	articles, err := api.RetrieveArticlesOnOrganization(c.Data, query)
+	ctx := context.Background()
+	articles, err := api.RetrieveArticlesOnOrganization(ctx, c.Data, query)
 	if err != nil {
 		return err
 	}

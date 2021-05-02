@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,13 +11,14 @@ import (
 //RetrieveTagsIFollow returns the tags that I follow
 // API PATH: /follows/tags
 // Method: GET
-func RetrieveTagsIFollow() (*FollowTagsResponse, error) {
+func RetrieveTagsIFollow(ctx context.Context) (*FollowTagsResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathFollowsTags)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {
@@ -46,13 +48,14 @@ func RetrieveTagsIFollow() (*FollowTagsResponse, error) {
 //RetrieveTags returns all available tags
 // API PATH: /tags
 // Method: GET
-func RetrieveTags(queries *CommonQuery) (*TagsResponse, error) {
+func RetrieveTags(ctx context.Context, queries *CommonQuery) (*TagsResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathTags)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	//setting value of api-key header
 	if err := SetApiKeyHeader(req); err != nil {

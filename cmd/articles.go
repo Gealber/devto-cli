@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"text/tabwriter"
 
@@ -152,7 +153,8 @@ func (c *ArticlesCommand) SetData(data string) {
 
 //retrieve ...
 func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidationError {
-	articles, err := api.RetrieveArticles(c.Data, queries)
+	ctx := context.Background()
+	articles, err := api.RetrieveArticles(ctx, c.Data, queries)
 	if err != nil {
 		return err
 	}
@@ -162,7 +164,8 @@ func (c *ArticlesCommand) retrieve(queries *api.GetArticleQuery) CommandValidati
 
 //retrieveMe ...
 func (c *ArticlesCommand) retrieveMe(queries *api.CommonQuery) CommandValidationError {
-	articles, err := api.RetrieveMeArticles(queries, c.Data)
+	ctx := context.Background()
+	articles, err := api.RetrieveMeArticles(ctx, queries, c.Data)
 	if err != nil {
 		return err
 	}
@@ -172,7 +175,8 @@ func (c *ArticlesCommand) retrieveMe(queries *api.CommonQuery) CommandValidation
 
 //retrieveByID ...
 func (c *ArticlesCommand) retrieveByID(body bool) CommandValidationError {
-	article, err := api.RetrieveArticleByID(c.Data)
+	ctx := context.Background()
+	article, err := api.RetrieveArticleByID(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -186,7 +190,8 @@ func (c *ArticlesCommand) retrieveByID(body bool) CommandValidationError {
 
 //retrieveArticlesVideo ...
 func (c *ArticlesCommand) retrieveArticlesVideo() CommandValidationError {
-	articles, err := api.RetrieveArticlesVideo(c.Data)
+	ctx := context.Background()
+	articles, err := api.RetrieveArticlesVideo(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -196,7 +201,8 @@ func (c *ArticlesCommand) retrieveArticlesVideo() CommandValidationError {
 
 //retrieveLatest ...
 func (c *ArticlesCommand) retrieveLatest(queries *api.CommonQuery) CommandValidationError {
-	articles, err := api.RetrieveLatestArticles(queries)
+	ctx := context.Background()
+	articles, err := api.RetrieveLatestArticles(ctx, queries)
 	if err != nil {
 		return err
 	}
@@ -206,7 +212,8 @@ func (c *ArticlesCommand) retrieveLatest(queries *api.CommonQuery) CommandValida
 
 //update ...
 func (c *ArticlesCommand) update(data *api.ArticleEdit) CommandValidationError {
-	article, err := api.UpdateArticle(c.Data, data)
+	ctx := context.Background()
+	article, err := api.UpdateArticle(ctx, c.Data, data)
 	if err != nil {
 		return err
 	}
@@ -280,7 +287,8 @@ func processCreate() (*api.ArticleCreate, error) {
 
 //create ...
 func (c *ArticlesCommand) create(data *api.ArticleCreate) CommandValidationError {
-	article, err := api.CreateArticle(data)
+	ctx := context.Background()
+	article, err := api.CreateArticle(ctx, data)
 	if err != nil {
 		return err
 	}

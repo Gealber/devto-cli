@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -11,13 +12,14 @@ import (
 //profile image information by its corresponding username
 // API PATH: /profile_images
 // Method: GET
-func RetrieveProfileImage(username string) (*ProfileImageResponse, error) {
+func RetrieveProfileImage(ctx context.Context, username string) (*ProfileImageResponse, error) {
 	client := &http.Client{}
 	url := fmt.Sprintf("%s%s", baseURL, pathProfileImage)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 
 	req.URL.Path += "/" + username
 

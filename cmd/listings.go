@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"text/tabwriter"
@@ -109,7 +110,8 @@ func processListingsQueries() (*api.ListingQuery, error) {
 
 //retrieveListing ...
 func (c *ListingsCommand) retrieveListing(queries *api.ListingQuery) CommandValidationError {
-	listings, err := api.RetrieveListings(queries)
+	ctx := context.Background()
+	listings, err := api.RetrieveListings(ctx, queries)
 	if err != nil {
 		return err
 	}
@@ -119,7 +121,8 @@ func (c *ListingsCommand) retrieveListing(queries *api.ListingQuery) CommandVali
 
 //retrieveListingByID ...
 func (c *ListingsCommand) retrieveListingByID() CommandValidationError {
-	listings, err := api.RetrieveListingsByID(c.Data)
+	ctx := context.Background()
+	listings, err := api.RetrieveListingsByID(ctx, c.Data)
 	if err != nil {
 		return err
 	}
@@ -167,7 +170,8 @@ func (c *ListingsCommand) createListing(data *api.ListingCreate) CommandValidati
 	if !valid {
 		return errors.New("Category is not allowed")
 	}
-	listing, err := api.CreateListing(data)
+	ctx := context.Background()
+	listing, err := api.CreateListing(ctx, data)
 	if err != nil {
 		return err
 	}
@@ -215,7 +219,8 @@ func (c *ListingsCommand) updateListing(data *api.ListingUpdate) CommandValidati
 	if !valid {
 		return errors.New("Category is not allowed")
 	}
-	listing, err := api.UpdateListing(c.Data, data)
+	ctx := context.Background()
+	listing, err := api.UpdateListing(ctx, c.Data, data)
 	if err != nil {
 		return err
 	}
