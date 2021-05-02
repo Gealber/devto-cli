@@ -7,13 +7,16 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path"
 )
 
 func GetApiKey() string {
+	devtoDir := os.Getenv("DEVTO_DIR")
+	filePath := path.Join(devtoDir, ".devto")
 	key := os.Getenv("DEV_API_KEY")
 	if len(key) == 0 {
 		//ignoring error
-		b, _ := ioutil.ReadFile(".devto")
+		b, _ := ioutil.ReadFile(filePath)
 		key = string(b[:])
 	}
 	return key

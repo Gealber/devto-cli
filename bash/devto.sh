@@ -5,7 +5,6 @@
 _complete_devto () {
     local cmd="${1##*/}"
     local word=${COMP_WORDS[COMP_CWORD]}
-    local line=${COMP_LINE}
     local xpat
     local commands="articles auth comments followers listings organizations podcasts reading_lists tags webhooks"
 

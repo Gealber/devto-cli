@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"path"
 	"text/tabwriter"
 )
 
@@ -18,7 +19,9 @@ func NewAuthCmd() *AuthCommand {
 func (c *AuthCommand) Run() CommandValidationError {
 	//big assumption for now, that .devto is on the same
 	//folder from where the cli it is executed
-	file, err := os.Create(".devto")
+	devtoDir := os.Getenv("DEVTO_DIR")
+	filePath := path.Join(devtoDir, ".devto")
+	file, err := os.Create(filePath)
 	if err != nil {
 		return NewCommandError("Unable to create file")
 	}
