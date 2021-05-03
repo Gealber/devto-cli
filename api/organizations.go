@@ -32,7 +32,10 @@ func RetrieveOrganizationByUsername(ctx context.Context, username string) (*Orga
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(OrganizationResponse)
 	err = json.Unmarshal(b, data)
@@ -64,6 +67,10 @@ func RetrieveUsersOnOrganization(ctx context.Context, username string, queries *
 	defer response.Body.Close()
 
 	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = extractError(b)
 	if err != nil {
 		return nil, err
 	}
@@ -102,6 +109,10 @@ func RetrieveListingOnOrganization(ctx context.Context, username string, queries
 	if err != nil {
 		return nil, err
 	}
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 	//fmt.Fprint(os.Stdout, string(b[:]))
 
 	data := new(ListingResponse)
@@ -134,6 +145,10 @@ func RetrieveArticlesOnOrganization(ctx context.Context, username string, querie
 	defer response.Body.Close()
 
 	b, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = extractError(b)
 	if err != nil {
 		return nil, err
 	}

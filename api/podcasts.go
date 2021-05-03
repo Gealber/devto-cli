@@ -32,7 +32,10 @@ func RetrievePodcastEpisodes(ctx context.Context, queries *PodcastEpisodesQuery)
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(PodcastResponse)
 	err = json.Unmarshal(b, data)

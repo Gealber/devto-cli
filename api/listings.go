@@ -32,7 +32,10 @@ func RetrieveListings(ctx context.Context, queries *ListingQuery) (*ListingRespo
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ListingResponse)
 	err = json.Unmarshal(b, data)
@@ -104,7 +107,10 @@ func RetrieveListingsByID(ctx context.Context, id string) (*ListingResponse, err
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ListingResponse)
 	err = json.Unmarshal(b, data)

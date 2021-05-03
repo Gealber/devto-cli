@@ -36,7 +36,10 @@ func RetrieveFollowers(ctx context.Context, query *FollowersQuery) (*FollowersRe
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(FollowersResponse)
 	err = json.Unmarshal(b, data)

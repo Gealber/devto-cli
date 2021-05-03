@@ -35,7 +35,10 @@ func RetrieveWebhooks(ctx context.Context) (*WebhooksResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(WebhooksResponse)
 	err = json.Unmarshal(b, data)
@@ -88,7 +91,10 @@ func RetrieveWebhookByID(ctx context.Context, id string) (*WebhookTypeBasic, err
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(WebhookTypeBasic)
 	err = json.Unmarshal(b, data)
@@ -118,11 +124,14 @@ func DeleteWebhook(ctx context.Context, id string) (*WebhookTypeBasic, error) {
 	}
 	defer response.Body.Close()
 
-	_, err = ioutil.ReadAll(response.Body)
+	b, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	return nil, nil
 }

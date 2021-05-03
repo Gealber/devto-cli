@@ -33,7 +33,10 @@ func RetrieveProfileImage(ctx context.Context, username string) (*ProfileImageRe
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ProfileImageResponse)
 	err = json.Unmarshal(b, data)

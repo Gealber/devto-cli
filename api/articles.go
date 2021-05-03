@@ -39,7 +39,10 @@ func RetrieveArticles(ctx context.Context, username string, queries *GetArticleQ
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)
@@ -112,7 +115,10 @@ func RetrieveLatestArticles(ctx context.Context, queries *CommonQuery) (*GetArti
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(GetArticlesResponse)
 	err = json.Unmarshal(b, data)
@@ -147,7 +153,10 @@ func RetrieveArticleByID(ctx context.Context, id string) (*ModifiedArticle, erro
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ModifiedArticle)
 	err = json.Unmarshal(b, data)
@@ -179,7 +188,10 @@ func RetrieveArticlesVideo(ctx context.Context, id string) (*ArticlesVideoRespon
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ArticlesVideoResponse)
 	err = json.Unmarshal(b, data)
@@ -222,7 +234,10 @@ func RetrieveMeArticles(ctx context.Context, queries *CommonQuery, pathToAdd str
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(GetArticlesMeResponse)
 	err = json.Unmarshal(b, data)

@@ -35,7 +35,10 @@ func RetrieveTagsIFollow(ctx context.Context) (*FollowTagsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(FollowTagsResponse)
 	err = json.Unmarshal(b, data)

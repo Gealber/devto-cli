@@ -39,7 +39,10 @@ func RetrieveReadingList(ctx context.Context, queries *CommonQuery) (*ReadingLis
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(ReadingListResponse)
 	err = json.Unmarshal(b, data)

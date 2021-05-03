@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -72,9 +73,45 @@ func payloadReq(ctx context.Context, ptr interface{}, method, pathBase, pathToAd
 	if err != nil {
 		return nil, err
 	}
-	//printing on the terminal
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	//error in response
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
+
 	return b, nil
+}
+
+//checkResponse check if the response is not an error
+func checkResponse(b []byte) (*ErrorResponse, error) {
+	errMsg := &ErrorResponse{}
+	if len(b) > 0 {
+		err := json.Unmarshal(b, errMsg)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return errMsg, nil
+}
+
+func toErrorString(err *ErrorResponse) string {
+	if err == nil {
+		return ""
+	}
+	return err.Error
+}
+
+func extractError(b []byte) error {
+	//checking for error in response
+	errResponse, err := checkResponse(b)
+	if err != nil {
+		return err
+	}
+	errMsg := toErrorString(errResponse)
+	if len(errMsg) > 0 {
+		return errors.New(errMsg)
+	}
+	return nil
 }
 
 func addQueries(req *http.Request, queries *GetArticleQuery) {

@@ -31,7 +31,9 @@ func ModifiedArticle(article *api.ModifiedArticle) {
 	fmt.Printf("  %s %s\n", toBoldGreen(id), toItalicYellow(article.Title))
 	fmt.Printf("  %s\n", toItalicCyan("URL: "+article.URL))
 	fmt.Printf("  %s\n", toItalicGreen("Tags: "+article.TagList))
-	fmt.Printf("  %s\n", toItalicYellow("Username: "+article.User.Username))
+	if article.User != nil {
+		fmt.Printf("  %s\n", toItalicYellow("Username: "+article.User.Username))
+	}
 	fmt.Println()
 }
 

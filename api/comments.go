@@ -32,7 +32,10 @@ func RetrieveComments(ctx context.Context, queries *CommentQuery) (*CommentsResp
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(CommentsResponse)
 	err = json.Unmarshal(b, data)
@@ -69,7 +72,10 @@ func RetrieveComment(ctx context.Context, id string) (*CommentType, error) {
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Fprint(os.Stdout, string(b[:]))
+	err = extractError(b)
+	if err != nil {
+		return nil, err
+	}
 
 	data := new(CommentType)
 	err = json.Unmarshal(b, data)
