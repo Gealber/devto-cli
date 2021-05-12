@@ -83,15 +83,17 @@ func payloadReq(ctx context.Context, ptr interface{}, method, pathBase, pathToAd
 }
 
 //checkResponse check if the response is not an error
-func checkResponse(b []byte) (*ErrorResponse, error) {
+func checkResponse(b []byte) *ErrorResponse {
 	errMsg := &ErrorResponse{}
 	if len(b) > 0 {
 		err := json.Unmarshal(b, errMsg)
 		if err != nil {
-			return nil, err
+			//means that is not of type ErrorResponse
+			//so we need to treat it as a success
+			return nil
 		}
 	}
-	return errMsg, nil
+	return errMsg
 }
 
 func toErrorString(err *ErrorResponse) string {
@@ -103,10 +105,7 @@ func toErrorString(err *ErrorResponse) string {
 
 func extractError(b []byte) error {
 	//checking for error in response
-	errResponse, err := checkResponse(b)
-	if err != nil {
-		return err
-	}
+	errResponse := checkResponse(b)
 	errMsg := toErrorString(errResponse)
 	if len(errMsg) > 0 {
 		return errors.New(errMsg)
