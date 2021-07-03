@@ -1,5 +1,6 @@
 # Devto a cli for dev.to 
 ![Build status](https://github.com/Gealber/devto-cli/actions/workflows/go.yml/badge.svg?event=push)
+![Build success](https://img.shields.io/badge/build-success-brightgreen)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This is a work in progress so don't a expect a full support for [Dev API(beta)](https://docs.forem.com/api/).
