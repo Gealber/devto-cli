@@ -60,7 +60,7 @@ This is just optional
 Also optional
 
 ```bash
-make bash_autocomplete
+make bash_autocompletion
 source $HOME/.bashrc
 ```
 
