@@ -70,9 +70,10 @@ _find_command () {
 }
 
 _get_argc () {
+    local line=${COMP_LINE}
     IFS=' ' read -r -a array <<< "$line"
-    len="${#array[@]}"
-    echo "$len"
+    lenArr="${#array[@]}"
+    echo "$lenArr"
 }
 
 complete -F _complete_devto devto
